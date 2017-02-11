@@ -1,4 +1,4 @@
-from flask import make_response
+from flask import redirect, render_template, url_for
 import json
 
 from app.models.client import Client
@@ -15,6 +15,6 @@ class ClientController(object):
         client.email = kwargs['email']
 
         save_command = SaveCommand()
-        save_command.execute(client)
+        result = save_command.execute(client)
 
-        return json.dumps(kwargs)
+        return render_template('register.html', message=result.result)
