@@ -5,7 +5,11 @@ from app.controllers.client_controller import ClientController
 
 @app.route('/')
 def root():
-    return redirect(url_for('register_client'))
+    return redirect(url_for('index'))
+
+@app.route('/index')
+def index():
+    return render_template('index.html')
 
 @app.route('/register_client')
 def register_client():

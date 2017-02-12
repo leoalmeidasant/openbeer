@@ -53,7 +53,7 @@ class Facade(object):
 
         for rule in operation_rules:
             if rule.process(domain):
-                message += ', ' + rule.process(domain)
+                message += rule.process(domain) + ', '
             else:
                 pass
         return message

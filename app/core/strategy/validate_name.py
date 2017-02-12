@@ -3,7 +3,6 @@ class ValidateName(object):
         pass
 
     def process(self, domain):
-        print(domain.name + ' ' + domain.email)
         if domain.name == domain.email:
             return 'name is equal to email'
         else:
