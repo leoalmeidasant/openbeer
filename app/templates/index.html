@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  {% block body %}
+  {% block navbar %}
   <nav class="navbar navbar-inverse navbar-fixed-top">
    <div class="container-fluid">
     <div class="navbar-header">
@@ -21,7 +21,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
      </button>
-     <a class="navbar-brand" href="#">Web Dev Academy</a>
+     <a class="navbar-brand" href="/">Openbeer</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
      <ul class="nav navbar-nav navbar-right">
@@ -31,10 +31,11 @@
     </div>
    </div>
   </nav>
-  {% endblock %}
+  {% endblock navbar %}
 
+  {% block body %}
   <div id="main" class="container-fluid">
-   <h3 class="page-header">Template Inicial</h3>
+   <h3 class="page-header">{% block title %}Home - List of clients{% endblock title %}</h3>
       {% if clients %}
       <table class="table">
         <tr>
@@ -56,6 +57,7 @@
       <h2 class="alert-info">We do not have clients yet</h2>
       {% endif %}
   </div>
+  {% endblock body %}
 
   <script src="/static/jquery-3.1.1.js"></script>
   <script src="/static/bootstrap.js"></script>

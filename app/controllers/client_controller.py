@@ -18,13 +18,13 @@ class ClientController(object):
         save_command = SaveCommand()
         result = save_command.execute(client)
 
-        return render_template('register.html', message=result.result)
+        return render_template('insert.html', message=result.result)
 
     @staticmethod
-    def search():
+    def search(client_id=None):
         client = Client()
         search_command = SearchCommand()
-
-        result = search_command.execute(client)
-
-        return render_template('index.html', clients=result.result)
+        result = search_command.execute(client, client_id)
+        if not client_id:
+            return render_template('index.html', clients=result.result)
+        return result.result

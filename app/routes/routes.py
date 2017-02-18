@@ -1,7 +1,7 @@
 from flask import redirect, render_template, url_for, request
 from app import app
-
 from app.controllers.client_controller import ClientController
+import json
 
 @app.route('/')
 def root():
@@ -14,6 +14,12 @@ def index():
 @app.route('/insert')
 def insert():
     return render_template('insert.html')
+
+@app.route('/update/<client_id>')
+def update(client_id):
+    client = ClientController.search(client_id)
+    return render_template('read.html', client=client)
+
 
 @app.route('/search')
 def search():

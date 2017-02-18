@@ -44,13 +44,13 @@ class Facade(object):
 
         return r
 
-    def search(self, domain):
+    def search(self, domain, client_id=None):
         r = Result()
         class_name = GetClassName.name(domain)
         errors = self.execute_rules(domain, 'SEARCH')
         if len(errors) == 0:
             dao = self.__map_daos[class_name]
-            r.result = dao.search()
+            r.result = dao.search(client_id)
         else:
             r.result = errors
 

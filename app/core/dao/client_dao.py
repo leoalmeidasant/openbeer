@@ -18,12 +18,18 @@ class ClientDao(object):
         self.conn.commit()
         return 'Successfully insert in table clients'
 
-    def search(self):
-        self.cur.execute('SELECT * FROM clients')
-        result = self.cur.fetchall()
-        clients = []
-        for row in result:
-            clients.append(dict(row))
-        if not clients:
-            return "We don't have clients yet"
-        return clients
+    def search(self, client_id=None):
+        if client_id:
+            self.cur.execute('SELECT * FROM clients WHERE id=%s' % client_id)
+            result = self.cur.fetchone()
+            client = dict(result)
+            return client
+        else:
+            self.cur.execute('SELECT * FROM clients')
+            result = self.cur.fetchall()
+            clients = []
+            for row in result:
+                clients.append(dict(row))
+            if not clients:
+                return "We don't have clients yet"
+            return clients

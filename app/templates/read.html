@@ -1,62 +1,24 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CRUD com Bootstrap 3</title>
+{% extends "index.html" %}
+{% block body %}
+<div id="main" class="container-fluid">
+  <h3 class="page-header">Read Test - Client: {{ client.id }}</h3>
 
-  <link href="/static/bootstrap.css" rel="stylesheet">
-  <link href="/static/style.css?q=1280549780" rel="stylesheet">
-</head>
-<body>
-
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-   <div class="container-fluid">
-    <div class="navbar-header">
-     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-     </button>
-     <a class="navbar-brand" href="#">Web Dev Academy</a>
+  <div class="row">
+    <div class="col-md-4">
+      <p><strong>Name:</strong></p>
+      <p>{{ client.name }}</p>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Início</a></li>
-      <li><a href="#">Opções</a></li>
-      <li><a href="#">Perfil</a></li>
-      <li><a href="#">Ajuda</a></li>
-     </ul>
+    <div class="col-md-4">
+      <p><strong>Email:</strong></p>
+      <p>{{ client.email }}</p>
     </div>
-   </div>
-  </nav>
-
-  <div id="main" class="container-fluid">
-   <h3 class="page-header">Read Test - Client: {{client.id}}</h3>
-
-   <div class="row">
-     <div class="col-md-4">
-       <p><strong>Name:</strong></p>
-       <p>{{client.name}}</p>
-     </div>
-     <div class="col-md-4">
-       <p><strong>Email:</strong></p>
-       <p>{{client.email}}</p>
-     </div>
-   </div>
-
-   <div id="actions" class="row">
-   <div class="col-md-12">
-    <a href="edit.html" class="btn btn-primary">Editar</a>
-    <a href="index.html" class="btn btn-default">Fechar</a>
-   </div>
   </div>
 
+  <div id="actions" class="row">
+    <div class="col-md-12">
+      <a href="/" class="btn btn-primary">Editar</a>
+      <a href="/" class="btn btn-default">Fechar</a>
+    </div>
   </div>
-
-  <script src="/static/jquery-3.1.1.js"></script>
-  <script src="/static/bootstrap.js"></script>
-</body>
-</html>
+</div>
+{% endblock body %}

@@ -4,6 +4,6 @@ class SearchCommand(object):
     def __init__(self):
         pass
 
-    def execute(self, domain):
+    def execute(self, domain, client_id=None):
         facade = Facade()
-        return facade.search(domain)
+        return facade.search(domain, client_id)
