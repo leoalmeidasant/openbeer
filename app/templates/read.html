@@ -24,7 +24,7 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
      <ul class="nav navbar-nav navbar-right">
-      <li><a href="/search">Search</a></li>
+      <li><a href="#">Início</a></li>
       <li><a href="#">Opções</a></li>
       <li><a href="#">Perfil</a></li>
       <li><a href="#">Ajuda</a></li>
@@ -34,26 +34,26 @@
   </nav>
 
   <div id="main" class="container-fluid">
-   <h3 class="page-header">Template Inicial</h3>
-      {% if clients %}
-      <table class="table">
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Email</th>
-        </tr>
-        {% for client in clients %}
-        <tr>
-          <td>{{ client.id }}</td>
-          <td>{{ client.name }}</td>
-          <td>{{ client.email }}</td>
-          <td><a href="/update/{{client.id}}"><button type="button" name="button" class="btn btn-primary">UPDATE</button></a></td>
-        </tr>
-        {% endfor %}
-      </table>
-      {% else %}
-      <h2 class="alert-info">We do not have clients yet</h2>
-      {% endif %}
+   <h3 class="page-header">Read Test - Client: {{client.id}}</h3>
+
+   <div class="row">
+     <div class="col-md-4">
+       <p><strong>Name:</strong></p>
+       <p>{{client.name}}</p>
+     </div>
+     <div class="col-md-4">
+       <p><strong>Email:</strong></p>
+       <p>{{client.email}}</p>
+     </div>
+   </div>
+
+   <div id="actions" class="row">
+   <div class="col-md-12">
+    <a href="edit.html" class="btn btn-primary">Editar</a>
+    <a href="index.html" class="btn btn-default">Fechar</a>
+   </div>
+  </div>
+
   </div>
 
   <script src="/static/jquery-3.1.1.js"></script>

@@ -3,6 +3,7 @@ import json
 
 from app.models.client import Client
 from app.controllers.command.save_command import SaveCommand
+from app.controllers.command.search_command import SearchCommand
 
 class ClientController(object):
     def __init__(self):
@@ -18,3 +19,12 @@ class ClientController(object):
         result = save_command.execute(client)
 
         return render_template('register.html', message=result.result)
+
+    @staticmethod
+    def search():
+        client = Client()
+        search_command = SearchCommand()
+
+        result = search_command.execute(client)
+
+        return render_template('index.html', clients=result.result)

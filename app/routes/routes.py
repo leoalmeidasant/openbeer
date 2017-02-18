@@ -9,11 +9,15 @@ def root():
 
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    return search()
 
-@app.route('/register_client')
-def register_client():
-    return render_template('register.html')
+@app.route('/insert')
+def insert():
+    return render_template('insert.html')
+
+@app.route('/search')
+def search():
+    return ClientController.search()
 
 @app.route('/save', methods=['GET', 'POST'])
 def client_save():

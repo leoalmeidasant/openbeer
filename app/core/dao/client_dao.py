@@ -17,3 +17,13 @@ class ClientDao(object):
             return 'Error to insert in table clients'
         self.conn.commit()
         return 'Successfully insert in table clients'
+
+    def search(self):
+        self.cur.execute('SELECT * FROM clients')
+        result = self.cur.fetchall()
+        clients = []
+        for row in result:
+            clients.append(dict(row))
+        if not clients:
+            return "We don't have clients yet"
+        return clients
