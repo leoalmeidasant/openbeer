@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CRUD com Bootstrap 3</title>
+  <title>CRUD Lab Engenharia de Software</title>
 
   <link href="/static/bootstrap.css" rel="stylesheet">
   <link href="/static/style.css?q=1280549780" rel="stylesheet">
 </head>
 <body>
 
+  {% block body %}
   <nav class="navbar navbar-inverse navbar-fixed-top">
    <div class="container-fluid">
     <div class="navbar-header">
@@ -25,13 +26,12 @@
     <div id="navbar" class="navbar-collapse collapse">
      <ul class="nav navbar-nav navbar-right">
       <li><a href="/search">Search</a></li>
-      <li><a href="#">Opções</a></li>
-      <li><a href="#">Perfil</a></li>
-      <li><a href="#">Ajuda</a></li>
+      <li><a href="/insert">Insert</a></li>
      </ul>
     </div>
    </div>
   </nav>
+  {% endblock %}
 
   <div id="main" class="container-fluid">
    <h3 class="page-header">Template Inicial</h3>
@@ -48,6 +48,7 @@
           <td>{{ client.name }}</td>
           <td>{{ client.email }}</td>
           <td><a href="/update/{{client.id}}"><button type="button" name="button" class="btn btn-primary">UPDATE</button></a></td>
+          <td><a href="/delete/{{client.id}}"><button type="button" name="button" class="btn btn-danger">DELETE</button></a></td>
         </tr>
         {% endfor %}
       </table>
