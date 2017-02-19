@@ -1,3 +1,4 @@
 *.pyc
 .git
 __pycache__
+exports.sh

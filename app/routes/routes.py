@@ -1,4 +1,4 @@
-from flask import redirect, render_template, url_for, request
+from flask import redirect, render_template, url_for, Flask, request
 from app import app
 from app.controllers.client_controller import ClientController
 import json
@@ -15,11 +15,10 @@ def index():
 def insert():
     return render_template('insert.html')
 
-@app.route('/update/<client_id>')
-def update(client_id):
+@app.route('/read/<client_id>')
+def read(client_id):
     client = ClientController.search(client_id)
     return render_template('read.html', client=client)
-
 
 @app.route('/search')
 def search():
@@ -32,3 +31,17 @@ def client_save():
         'email': request.form['email']
     }
     return ClientController.save(**kwargs)
+
+@app.route('/update', methods=['GET', 'POST'])
+def update():
+    print(request.form)
+    kwargs = {
+        'id': request.form.get('id'),
+        'name': request.form.get('name'),
+        'email': request.form.get('email')
+    }
+    return ClientController.update(**kwargs)
+
+@app.route('/delete/<client_id>')
+def delete_client(client_id):
+    return ClientController.delete(client_id)

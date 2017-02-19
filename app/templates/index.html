@@ -11,6 +11,10 @@
 </head>
 <body>
 
+  {% if message %}
+  <p class="alert alert-success">{{message}}</p>
+  {% endif %}
+
   {% block navbar %}
   <nav class="navbar navbar-inverse navbar-fixed-top">
    <div class="container-fluid">
@@ -33,31 +37,35 @@
   </nav>
   {% endblock navbar %}
 
-  {% block body %}
-  <div id="main" class="container-fluid">
-   <h3 class="page-header">{% block title %}Home - List of clients{% endblock title %}</h3>
+  <div class="container">
+    {% block body %}
+    <div id="main" class="container-fluid">
+      <h3 class="page-header">{% block title %}Home - List of clients{% endblock title %}</h3>
       {% if clients %}
-      <table class="table">
-        <tr>
+      <table class="table table-bordered table-hover table-condensed table-responsive">
+        <thead>
           <th>#</th>
           <th>Name</th>
           <th>Email</th>
-        </tr>
+          <th>Update</th>
+          <!-- <th>Delete</th> -->
+        </thead>
         {% for client in clients %}
-        <tr>
+        <tbody>
           <td>{{ client.id }}</td>
           <td>{{ client.name }}</td>
           <td>{{ client.email }}</td>
-          <td><a href="/update/{{client.id}}"><button type="button" name="button" class="btn btn-primary">UPDATE</button></a></td>
-          <td><a href="/delete/{{client.id}}"><button type="button" name="button" class="btn btn-danger">DELETE</button></a></td>
-        </tr>
+          <td><a href="/read/{{client.id}}"><button type="button" name="button" class="btn btn-primary">Edit</button></a></td>
+          <!-- <td><a href="#"><button type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal">Delete</button></a></td> -->
+        </tbody>
         {% endfor %}
       </table>
       {% else %}
-      <h2 class="alert-info">We do not have clients yet</h2>
+      <h2 class="alert alert-info">We do not have clients yet</h2>
       {% endif %}
+    </div>
+    {% endblock body %}
   </div>
-  {% endblock body %}
 
   <script src="/static/jquery-3.1.1.js"></script>
   <script src="/static/bootstrap.js"></script>

@@ -20,6 +20,8 @@ class Facade(object):
         #lists of rules to validate crud
         rules_save_client = []
         rules_search_client = []
+        rules_update_client = []
+        rules_delete_client = []
 
         #adding rules to array
         rules_save_client.append(validate_name)
@@ -29,6 +31,8 @@ class Facade(object):
 
         map_rules_client['SAVE'] = rules_save_client
         map_rules_client['SEARCH'] = rules_search_client
+        map_rules_client['UPDATE'] = rules_update_client
+        map_rules_client['DELETE'] = rules_delete_client
 
         self.__map_business_rules['Client'] = map_rules_client
 
@@ -51,6 +55,30 @@ class Facade(object):
         if len(errors) == 0:
             dao = self.__map_daos[class_name]
             r.result = dao.search(client_id)
+        else:
+            r.result = errors
+
+        return r
+
+    def update(self, domain):
+        r = Result()
+        class_name = GetClassName.name(domain)
+        errors = self.execute_rules(domain, 'UPDATE')
+        if len(errors) == 0:
+            dao = self.__map_daos[class_name]
+            r.result = dao.update(domain)
+        else:
+            r.result = errors
+
+        return r
+
+    def delete(self, domain, client_id):
+        r = Result()
+        class_name = GetClassName.name(domain)
+        errors = self.execute_rules(domain, 'DELETE')
+        if len(errors) == 0:
+            dao = self.__map_daos[class_name]
+            r.result = dao.delete(client_id)
         else:
             r.result = errors
 

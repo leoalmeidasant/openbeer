@@ -18,6 +18,22 @@ class ClientDao(object):
         self.conn.commit()
         return 'Successfully insert in table clients'
 
+    def update(self, domain):
+        try:
+            self.cur.execute('UPDATE clients SET name=(%s), email=(%s) WHERE id=(%s)', (domain.name, domain.email, domain.id))
+            self.conn.commit()
+            return 'Update success!'
+        except:
+            return 'Not able to update client'
+
+    def delete(self, client_id):
+        try:
+            self.cur.execute('DELETE FROM clients WHERE id=(%s)' % client_id)
+            self.conn.commit()
+            return 'Sucess!'
+        except:
+            return 'Not able to delete client'
+
     def search(self, client_id=None):
         if client_id:
             self.cur.execute('SELECT * FROM clients WHERE id=%s' % client_id)
@@ -25,7 +41,7 @@ class ClientDao(object):
             client = dict(result)
             return client
         else:
-            self.cur.execute('SELECT * FROM clients')
+            self.cur.execute('SELECT * FROM clients ORDER BY id ASC')
             result = self.cur.fetchall()
             clients = []
             for row in result:
