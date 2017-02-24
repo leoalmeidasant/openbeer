@@ -8,9 +8,9 @@
   {% block body %}
   <div id="main" class="container-fluid">
     {% block title %}Insert{% endblock title %}
-    {% if message %}
+    <!-- {% if message %}
     <p class="alert alert-success">{{message}}</p>
-    {% endif %}
+    {% endif %} -->
     <form action="{{url_for('client_save')}}" method="post">
       <div class="row">
        <div class="form-group col-md-4">
