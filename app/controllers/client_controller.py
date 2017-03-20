@@ -16,6 +16,8 @@ class ClientController(object):
         client = Client()
         client.name = kwargs['name']
         client.email = kwargs['email']
+        client.password = kwargs['password']
+        client.username = kwargs['username']
 
         save_command = SaveCommand()
         result = save_command.execute(client)
@@ -28,6 +30,8 @@ class ClientController(object):
         client.id = kwargs['id']
         client.name = kwargs['name']
         client.email = kwargs['email']
+        client.password = kwargs['password']
+        client.username = kwargs['username']
 
         update_command = UpdateCommand()
         result = update_command.execute(client)
