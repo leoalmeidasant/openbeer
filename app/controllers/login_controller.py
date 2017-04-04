@@ -4,9 +4,19 @@ from flask_login import LoginManager
 class LoginController(object):
 
     def __init__(self):
-        self.login_manager = LoginManager()
-        self.login_manager.init_app(app)
+        pass
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.get(user_id)
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return str(self.id)

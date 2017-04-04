@@ -2,6 +2,7 @@ import psycopg2
 import psycopg2.extras
 
 from app.core.dao.connection import Connection
+from app.models.client import Client
 
 
 class ClientDao(object):
@@ -49,3 +50,17 @@ class ClientDao(object):
             if not clients:
                 return "We don't have clients yet"
             return clients
+
+    def validate_login(self, email):
+        self.cur.execute("SELECT * FROM clients where email=('%s')" % email)
+        result = self.cur.fetchone()
+        if result:
+            client = Client()
+            client.id = result['id']
+            client.name = result['name']
+            client.password = result['password']
+            client.email = result['email']
+            client.username = result['username']
+            return client
+        else:
+            return result

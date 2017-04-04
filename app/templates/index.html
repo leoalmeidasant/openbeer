@@ -15,6 +15,18 @@
   <p class="alert alert-success">{{message}}</p>
   {% endif %}
 
+  <div class="alert alert-warning">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </div>
+
   {% block navbar %}
   <nav class="navbar navbar-inverse navbar-fixed-top">
    <div class="container-fluid">
@@ -31,6 +43,11 @@
      <ul class="nav navbar-nav navbar-right">
       <li><a href="/search">Search</a></li>
       <li><a href="/insert">Insert</a></li>
+      {% if current_user.is_anonymous %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+      {% else %}
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      {% endif %}
      </ul>
     </div>
    </div>
