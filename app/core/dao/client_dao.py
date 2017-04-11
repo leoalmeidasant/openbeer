@@ -12,7 +12,7 @@ class ClientDao(object):
         self.cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     def save(self, domain):
-        self.cur.execute('INSERT INTO clients (name, email) VALUES (%s, %s) RETURNING id', (domain.name, domain.email))
+        self.cur.execute('INSERT INTO clients (name, lastname, email, password, confirm_password, phone, created_at, updated_at) VALUES (%s, %s) RETURNING id', (domain.name, domain.lastname, domain.email, domain.password, domain.confirm_password, domain.phone, domain.created_at, domain.updated_at))
         id = self.cur.fetchone()[0]
         if not id:
             return 'Error to insert in table clients'
@@ -21,7 +21,7 @@ class ClientDao(object):
 
     def update(self, domain):
         try:
-            self.cur.execute('UPDATE clients SET name=(%s), email=(%s) WHERE id=(%s)', (domain.name, domain.email, domain.id))
+            self.cur.execute('UPDATE clients SET name=(%s), lastname=(%s), email=(%s), password=(%s), confirm_password=(%s), phone(%s), updated_at=(%s) WHERE id=(%s)', (domain.name, domain.lastname, domain.email, domain.password, domain.confirm_password, domain.phone, domain.updated_at, domain.id))
             self.conn.commit()
             return 'Update success!'
         except:
