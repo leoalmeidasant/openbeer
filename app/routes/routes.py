@@ -18,7 +18,18 @@ def root():
 
 @app.route('/index')
 def index():
-    return search()
+    return render_template('home.html.j2')
+
+##rotas para produtos
+@app.route('/product/new')
+def new_product():
+    return render_template('products/new.html.j2')
+
+
+##rotas para admin
+@app.route('/admin/new')
+def new_admin():
+    return render_template('admin/new.html.j2')
 
 @app.route('/insert')
 def insert():
