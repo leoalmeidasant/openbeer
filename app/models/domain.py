@@ -1,10 +1,8 @@
 class Domain(object):
-
     def __init__(self):
         self.__id = None
         self.__created_at = None
         self.__updated_at = None
-
 
     @property
     def id(self):

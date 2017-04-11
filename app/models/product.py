@@ -1,6 +1,6 @@
 from app.models.domain import Domain
 
-class Products(Domain):
+class Product(Domain):
     def __init__(self):
         super().__init__()
         self.__name = None

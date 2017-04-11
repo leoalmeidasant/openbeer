@@ -4,6 +4,7 @@ class DeleteCommand(object):
     def __init__(self):
         pass
 
+    @staticmethod
     def execute(self, domain, client_id):
         facade = Facade()
         return facade.delete(domain, client_id)

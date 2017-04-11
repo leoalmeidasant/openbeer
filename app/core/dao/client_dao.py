@@ -12,7 +12,7 @@ class ClientDao(object):
         self.cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     def save(self, domain):
-        self.cur.execute('INSERT INTO clients (name, lastname, email, password, confirm_password, phone, created_at, updated_at) VALUES (%s, %s) RETURNING id', (domain.name, domain.lastname, domain.email, domain.password, domain.confirm_password, domain.phone, domain.created_at, domain.updated_at))
+        self.cur.execute('INSERT INTO clients (name, lastname, email, password, confirm_password, phone, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id', (domain.name, domain.lastname, domain.email, domain.password, domain.confirm_password, domain.phone, domain.created_at, domain.updated_at))
         id = self.cur.fetchone()[0]
         if not id:
             return 'Error to insert in table clients'

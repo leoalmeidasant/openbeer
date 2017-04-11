@@ -1,6 +1,6 @@
-from flask import redirect, render_template, url_for
 import json
-
+import datetime
+from flask import redirect, render_template, url_for
 from app.models.client import Client
 from app.controllers.command.save_command import SaveCommand
 from app.controllers.command.search_command import SearchCommand
@@ -15,7 +15,13 @@ class ClientController(object):
     def save(**kwargs):
         client = Client()
         client.name = kwargs['name']
+        client.lastname = kwargs['lastname']
         client.email = kwargs['email']
+        client.password = kwargs['password']
+        client.confirm_password = ['confirm_password']
+        client.phone = kwargs['phone']
+        client.created_at = datetime.datetime.now()
+        client.updated_at = datetime.datetime.now()
 
         save_command = SaveCommand()
         result = save_command.execute(client)
@@ -27,7 +33,12 @@ class ClientController(object):
         client = Client()
         client.id = kwargs['id']
         client.name = kwargs['name']
+        client.lastname = kwargs['lastname']
         client.email = kwargs['email']
+        client.password = kwargs['password']
+        client.confirm_password = ['confirm_password']
+        client.phone = kwargs['phone']
+        client.updated_at = datetime.datetime.now()
 
         update_command = UpdateCommand()
         result = update_command.execute(client)
