@@ -5,6 +5,6 @@ class SearchCommand(object):
         pass
 
     @staticmethod
-    def execute(self, domain, client_id=None):
+    def execute(domain, id=None):
         facade = Facade()
-        return facade.search(domain, client_id)
+        return facade.search(domain, id)

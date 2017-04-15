@@ -5,6 +5,6 @@ class SaveCommand(object):
         pass
 
     @staticmethod
-    def execute(self, domain):
+    def execute(domain):
         facade = Facade()
         return facade.save(domain)

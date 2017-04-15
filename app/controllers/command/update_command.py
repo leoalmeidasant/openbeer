@@ -5,6 +5,6 @@ class UpdateCommand(object):
         pass
 
     @staticmethod
-    def execute(self, domain):
+    def execute(domain):
         facade = Facade()
         return facade.update(domain)
