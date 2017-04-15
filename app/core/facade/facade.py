@@ -1,4 +1,4 @@
-from app.core.dao.client_dao import ClientDao
+from app.core.dao.user_dao import UserDao
 from app.core.result.result import Result
 from app.core.strategy.validate_name import ValidateName
 from app.core.strategy.get_class_name import GetClassName
@@ -9,32 +9,32 @@ class Facade(object):
         self.__map_business_rules = {}
 
         #create instances of DAO classes
-        client_dao = ClientDao()
+        user_dao = UserDao()
 
         #adding each dao in map indexing by class name
-        self.__map_daos['Client'] = client_dao
+        self.__map_daos['User'] = user_dao
 
         #creating instances of busisness rules to be used
         validate_name = ValidateName()
 
         #lists of rules to validate crud
-        rules_save_client = []
-        rules_search_client = []
-        rules_update_client = []
-        rules_delete_client = []
+        rules_save_user = []
+        rules_search_user = []
+        rules_update_user = []
+        rules_delete_user = []
 
         #adding rules to array
-        rules_save_client.append(validate_name)
+        rules_save_user.append(validate_name)
 
         #map to agroup rules
-        map_rules_client = {}
+        map_rules_user = {}
 
-        map_rules_client['SAVE'] = rules_save_client
-        map_rules_client['SEARCH'] = rules_search_client
-        map_rules_client['UPDATE'] = rules_update_client
-        map_rules_client['DELETE'] = rules_delete_client
+        map_rules_user['SAVE'] = rules_save_user
+        map_rules_user['SEARCH'] = rules_search_user
+        map_rules_user['UPDATE'] = rules_update_user
+        map_rules_user['DELETE'] = rules_delete_user
 
-        self.__map_business_rules['Client'] = map_rules_client
+        self.__map_business_rules['User'] = map_rules_user
 
     def save(self, domain):
         r = Result()
@@ -48,13 +48,13 @@ class Facade(object):
 
         return r
 
-    def search(self, domain, client_id=None):
+    def search(self, domain, user_id=None):
         r = Result()
         class_name = GetClassName.name(domain)
         errors = self.execute_rules(domain, 'SEARCH')
         if len(errors) == 0:
             dao = self.__map_daos[class_name]
-            r.result = dao.search(client_id)
+            r.result = dao.search(user_id)
         else:
             r.result = errors
 
@@ -72,13 +72,13 @@ class Facade(object):
 
         return r
 
-    def delete(self, domain, client_id):
+    def delete(self, domain, user_id):
         r = Result()
         class_name = GetClassName.name(domain)
         errors = self.execute_rules(domain, 'DELETE')
         if len(errors) == 0:
             dao = self.__map_daos[class_name]
-            r.result = dao.delete(client_id)
+            r.result = dao.delete(user_id)
         else:
             r.result = errors
 
