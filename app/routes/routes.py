@@ -1,6 +1,7 @@
 from flask import redirect, render_template, url_for, Flask, request, flash
 from app import app, login_manager
 from app.controllers.user_controller import UserController
+from app.controllers.beer_controller import BeerController
 from app.models.login_form import LoginForm
 from app.core.dao.user_dao import UserDao
 from flask_login import login_user, logout_user
@@ -19,14 +20,45 @@ def root():
 def index():
     return render_template('home.html.j2')
 
-##rotas para produtos
-@app.route('/product/new')
-def new_product():
-    return render_template('products/new.html.j2')
+##rotas para cervejas
+@app.route('/beer')
+def beer():
+    beers =  BeerController.search()
+    return render_template('beers/index.html.j2', beers=beers, root_path=app.root_path)
+
+@app.route('/beer/new', methods=['GET', 'POST'])
+def new_beer():
+    if request.method == 'POST':
+        kwargs = {
+            'name': request.form['name'],
+            'description': request.form['description'],
+            'value': request.form['value'],
+            'type': request.form['type'],
+            'quantity': request.form['quantity'],
+            'image': request.files.get('image')
+        }
+        return BeerController.save(**kwargs)
+    return render_template('beers/new.html.j2', message=request.args.get('message'))
+
+@app.route('/edit_beer/<id>', methods=['GET', 'POST'])
+def edit_beer(id):
+    beer = BeerController.search(id)
+    if request.method == 'GET':
+        return render_template('beers/edit.html.j2', beer=beer, message=request.args.get('message'))
+    else:
+        kwargs = {
+            'id': id,
+            'name': request.form['name'],
+            'description': request.form['description'],
+            'value': request.form['value'],
+            'type': request.form['type'],
+            'quantity': request.form['quantity'],
+        }
+        return BeerController.update(**kwargs)
 
 
 ##rotas para admin
-@app.route('/admin/new')
+@app.route('/admin/new', methods=['GET', 'POST'])
 def new_admin():
     return render_template('admin/new.html.j2')
 
@@ -45,16 +77,16 @@ def new_admin():
 #
 # @app.route('/save', methods=['GET', 'POST'])
 # def user_save():
-#     kwargs = {
-#         'name': request.form['name'],
-#         'lastname': request.form['lastname'],
-#         'email': request.form['email'],
-#         'password': request.form['password'],
-#         'confirm_password': request.form['confirm_password'],
-#         'phone': request.form['phone'],
-#         'level': request.form['level']
-#     }
-#     return UserController.save(**kwargs)
+#     # kwargs = {
+#     #     'name': request.form['name'],
+#     #     'lastname': request.form['lastname'],
+#     #     'email': request.form['email'],
+#     #     'password': request.form['password'],
+#     #     'confirm_password': request.form['confirm_password'],
+#     #     'phone': request.form['phone'],
+#     #     'level': request.form['level']
+#     # }
+#     return UserController.save(request.form)
 #
 # @app.route('/update', methods=['GET', 'POST'])
 # def update():

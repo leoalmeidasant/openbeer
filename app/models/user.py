@@ -1,4 +1,5 @@
 from app import db
+from app.models.address import Address
 
 class User(db.Model):
     __tablename__ = "users"
@@ -9,7 +10,8 @@ class User(db.Model):
     password = db.Column(db.String)
     confirm_password = db.Column(db.String)
     phone = db.Column(db.String)
-    level = db.Column(db.String)
+    addresses = db.relationship('Address', backref='person', lazy='dynamic',
+                                    primaryjoin="User.id == Address.user_id")
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)
 

@@ -1,15 +1,8 @@
-from app.models.user import User
+from app import db
 
-class Admin(User):
-    def __init__(self):
-        super().__init__()
-        self.__name = None
-
-    @property
-    def name(self):
-        return self.__name
-
-    @setter.name
-    def name(self, name):
-        self.__name = name
-        
+class Admin(db.Model):
+    __tablename__ = "admins"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    email = db.Column(db.String)
+    password = db.Column(db.String)

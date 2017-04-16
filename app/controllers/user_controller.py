@@ -7,8 +7,6 @@ from app.controllers.command.update_command import UpdateCommand
 from app.controllers.command.delete_command import DeleteCommand
 
 class UserController(object):
-    def __init__(self):
-        pass
 
     @staticmethod
     def save(**kwargs):
@@ -19,7 +17,6 @@ class UserController(object):
             password=kwargs['password'],
             confirm_password=kwargs['confirm_password'],
             phone=kwargs['phone'],
-            level=kwargs['level'],
             created_at=datetime.datetime.now(),
             updated_at=datetime.datetime.now()
         )
@@ -36,7 +33,6 @@ class UserController(object):
             password=kwargs['password'],
             confirm_password=kwargs['confirm_password'],
             phone=kwargs['phone'],
-            level=kwargs['level'],
             updated_at=datetime.datetime.now()
         )
         result = UpdateCommand.execute(user)
@@ -45,7 +41,7 @@ class UserController(object):
     @staticmethod
     def delete(user_id):
         user = User()
-        result = DeleteCommand(user, user_id)
+        result = DeleteCommand.execute(user, user_id)
         return render_template('index.html', message=result)
 
     @staticmethod

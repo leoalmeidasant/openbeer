@@ -11,7 +11,7 @@ class UserDao(object):
         return 'Success!'
 
     def update(self, user):
-        User.query.filter(User.id == user.id).update(user).first()
+        User.query.filter(User.id == user.id).update(user)
         db.session.commit()
         return 'Success!'
 
