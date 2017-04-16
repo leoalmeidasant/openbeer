@@ -20,11 +20,15 @@ def root():
 def index():
     return render_template('home.html.j2')
 
-##rotas para cervejas
+##r############## Rotas para cervejas
 @app.route('/beer')
 def beer():
     beers =  BeerController.search()
-    return render_template('beers/index.html.j2', beers=beers, root_path=app.root_path)
+    return render_template('beers/index.html.j2',
+            beers=beers,
+            root_path=app.root_path,
+            message=request.args.get('message')
+        )
 
 @app.route('/beer/new', methods=['GET', 'POST'])
 def new_beer():
@@ -56,6 +60,10 @@ def edit_beer(id):
         }
         return BeerController.update(**kwargs)
 
+@app.route('/delete_beer/<id>', methods=['GET', 'POST'])
+def delete_beer(id):
+    return BeerController.delete(id)
+################### Fim das rotas para cervejas
 
 ##rotas para admin
 @app.route('/admin/new', methods=['GET', 'POST'])

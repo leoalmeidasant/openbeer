@@ -45,7 +45,7 @@ class BeerController(object):
     def delete(beer_id):
         beer = Beer()
         result = DeleteCommand.execute(beer, beer_id)
-        return redirect(url_for('edit_beer', message=result.result))
+        return redirect(url_for('beer', message=result.result))
 
     @staticmethod
     def search(beer_id=None):

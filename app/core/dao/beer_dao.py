@@ -25,7 +25,8 @@ class BeerDao(object):
     def delete(self, beer_id):
         beer = Beer.query.filter(Beer.id == beer_id).first()
         db.session.delete(beer)
-        return 200
+        db.session.commit()
+        return 'Produto deletado com sucesso!'
 
     def search(self, beer_id=None):
         if not beer_id:
