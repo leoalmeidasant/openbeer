@@ -1,7 +1,64 @@
-{% extends "_base.html.j2" %}
+{% extends "_user_base.html.j2" %}
 {% block base %}
   {{ super() }}
 {% endblock base %}
 
 {% block body %}
+<div class="ui segment">
+  <h4 class="ui header">Cervejas</h4>
+  <div class="ui divider"></div>
+    <div class="ui five column grid">
+      {% for beer in beers %}
+      <div class="column">
+        <div class="ui card">
+          <div class="image">
+            {% if beer.image %}
+            <img src="static/images/{{ beer.image }}">
+            {% endif %}
+          </div>
+          <div class="content">
+            <a class="header">{{ beer.name }}</a>
+            <div class="meta">
+              <span class="date">{{ beer.type }}</span>
+            </div>
+            <div class="description">
+              {{ beer.description }}
+            </div>
+          </div>
+          <div class="extra content">
+            R${{ beer.value }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="ui divider"></div>
+    <h4 class="ui header">Petiscos</h4>
+    <div class="ui divider"></div>
+    <div class="ui five column grid">
+      {% for beer in beers %}
+      <div class="column">
+        <div class="ui card">
+          <div class="image">
+            {% if beer.image %}
+            <img src="static/images/{{ beer.image }}">
+            {% endif %}
+          </div>
+          <div class="content">
+            <a class="header">{{ beer.name }}</a>
+            <div class="meta">
+              <span class="date">{{ beer.type }}</span>
+            </div>
+            <div class="description">
+              {{ beer.description }}
+            </div>
+          </div>
+          <div class="extra content">
+            R${{ beer.value }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
 {% endblock body %}

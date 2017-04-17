@@ -4,14 +4,6 @@
 {% endblock base %}
 
 {% block body %}
-{% if message %}
-<div class="ui message success">
-  <i class="close icon"></i>
-  <div class="header">
-    {{message}}
-  </div>
-</div>
-{% endif %}
 <a href="/beer/new" class="ui right floated blue button">Cadastrar nova cerveja</a>
 <h4 class="ui header">Cervejas</h4>
 <div class="ui divider"></div>
@@ -42,19 +34,4 @@
   </div>
 {% endfor %}
 </div>
-
-<script type="text/javascript">
-  $('select.dropdown')
-  .dropdown()
-  ;
-  $('.message .close')
-  .on('click', function() {
-    $(this)
-      .closest('.message')
-      .transition('fade')
-    ;
-  })
-;
-</script>
-
 {% endblock body %}

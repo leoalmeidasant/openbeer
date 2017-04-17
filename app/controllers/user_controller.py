@@ -1,6 +1,7 @@
 import datetime
-from flask import redirect, render_template, url_for
-from app.models.user import User as User
+from flask import redirect, render_template, url_for, flash
+from app.models.user import User
+from app.models.address import Address
 from app.controllers.command.save_command import SaveCommand
 from app.controllers.command.search_command import SearchCommand
 from app.controllers.command.update_command import UpdateCommand
@@ -20,8 +21,19 @@ class UserController(object):
             created_at=datetime.datetime.now(),
             updated_at=datetime.datetime.now()
         )
-        result = SaveCommand.execute(user)
-        return redirect(url_for('index'), message=result)
+        SaveCommand.execute(user)
+        address = Address(
+            zip_code=kwargs['address']['zip_code'],
+            street=kwargs['address']['street'],
+            number=kwargs['address']['number'],
+            district=kwargs['address']['district'],
+            user_id=user.id,
+            created_at=datetime.datetime.now(),
+            updated_at=datetime.datetime.now()
+        )
+        result = SaveCommand.execute(address)
+        flash(result.result)
+        return redirect(url_for('index'))
 
     @staticmethod
     def update(**kwargs):

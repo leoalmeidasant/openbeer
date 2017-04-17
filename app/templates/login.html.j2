@@ -1,33 +1,32 @@
-{% extends "index.html" %}
+{% extends "_user_base.html.j2" %}
 {% block navbar %}
   {{ super() }}
 {% endblock navbar %}
 
 {% block body %}
-<div class="col-md-4 col-md-offset-4">
+<div class="">
   <form action="" method="post">
     {{ form.csrf_token }}
-    <div class="form-group">
+    <div class="">
       <label>Email</label>
       {{ form.email(class="form-control", placeholder="email@email.com.br") }}
     </div>
     {% if form.email.errors %}
-      <p class="alert alert-danger">{{ form.errors.email }}</p>
+      <p class="">{{ form.errors.email }}</p>
     {% endif %}
-    <div class="form-group">
+    <div class="">
       <label>Passoword</label>
       {{ form.password(class="form-control") }}
     </div>
     {% if form.password.errors %}
-      <p class="alert alert-danger">{{ form.errors.email }}</p>
+      <p class="">{{ form.errors.email }}</p>
     {% endif %}
-    <div class="checkbox">
+    <div class="">
       <label>
         {{ form.remember_me }} Remember me
       </label>
     </div>
-    <button type="submit" name="button" class="btn btn-primary">Login</button>
+    <button type="submit" name="button" class="ui button">Login</button>
   </form>
 </div>
-
 {% endblock body %}

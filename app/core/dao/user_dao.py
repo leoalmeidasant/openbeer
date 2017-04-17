@@ -7,8 +7,7 @@ class UserDao(object):
 
     def save(self, user):
         db.session.add(user)
-        db.session.commit()
-        return 'Success!'
+        db.session.flush()
 
     def update(self, user):
         User.query.filter(User.id == user.id).update(user)
@@ -27,3 +26,7 @@ class UserDao(object):
         else:
             user = User.query.filter(User.id == user_id).first()
             return user
+
+    def validate_login(self, email):
+        user = User.query.filter(User.email == email).first()
+        return user

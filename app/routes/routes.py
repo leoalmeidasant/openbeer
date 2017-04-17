@@ -18,7 +18,8 @@ def root():
 
 @app.route('/index')
 def index():
-    return render_template('home.html.j2')
+    beers = BeerController.search()
+    return render_template('home.html.j2', beers=beers)
 
 ##r############## Rotas para cervejas
 @app.route('/beer')
@@ -26,7 +27,6 @@ def beer():
     beers =  BeerController.search()
     return render_template('beers/index.html.j2',
             beers=beers,
-            root_path=app.root_path,
             message=request.args.get('message')
         )
 
@@ -110,6 +110,48 @@ def new_admin():
 # def delete_user(user_id):
 #     return UserController.delete(user_id)
 #
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    dao = UserDao()
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = dao.validate_login(email=form.email.data)
+        if user and user.password == form.password.data:
+            login_user(user)
+            flash("Logged in.")
+            return redirect(url_for('index'))
+        else:
+            flash("Invalid login.")
+    return render_template('login.html.j2', form=form)
+
+
+@app.route('/new_user', methods=['GET', 'POST'])
+def new_user():
+    if request.method == 'POST':
+        user = {
+            'name': request.form['name'],
+            'lastname': request.form['lastname'],
+            'email': request.form['email'],
+            'password': request.form['password'],
+            'confirm_password': request.form['confirm_password'],
+            'phone': request.form['phone'],
+            'address': {
+                'street': request.form['street'],
+                'number': request.form['number'],
+                'district': request.form['district'],
+                'zip_code': request.form['zip_code']
+            }
+        }
+        return UserController.save(**user)
+    return render_template('users/new.html.j2')
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    flash('Logged out!')
+    return redirect(url_for('index'))
 #
 # @app.route('/login', methods=['POST', 'GET'])
 # def login():

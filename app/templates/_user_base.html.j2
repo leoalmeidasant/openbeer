@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../static/semantic/dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/menu.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/slick-theme.css"/>
+    <script src="../static/semantic/dist/semantic.min.js"></script>
+  </head>
+  <body>
+
+    {% block base %}
+    <div class="ui container raised blue segment">
+      <div class="ui huge header center aligned" id="titulo">
+        OPENBEER
+      </div>
+      <div class="ui secondary menu">
+        <a class="item" href="/">
+          Home
+        </a>
+        <a class="item" href="/user_beer">
+          Cervejas
+        </a>
+        <a class="item">
+          Petiscos
+        </a>
+        <div class="right menu">
+          <div class="item">
+            <div class="ui icon input">
+              <input type="text" placeholder="Search...">
+              <i class="search link icon"></i>
+            </div>
+          </div>
+          {% if current_user.is_anonymous %}
+          <a class="ui item" href="/login">
+            Logar
+          </a>
+          {% else %}
+          <a class="ui item" href="/logout">
+            Deslogar usuário {{ current_user.name }}
+          </a>
+
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endblock base %}
+
+    <div class="ui container raised blue segment">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="ui message">
+          <i class="close icon"></i>
+          <div class="header flashes">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      {% endwith %}
+
+      {% block body %}
+      {% endblock body %}
+    </div>
+  </body>
+
+  <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous">
+  </script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+</html>
+
+<script type="text/javascript">
+  $('.message .close')
+  .on('click', function() {
+    $(this)
+      .closest('.message')
+      .transition('fade')
+    ;
+  });
+
+  $(document).ready(function(){
+    $('.grid').slick({
+      infinite: true,
+      slidesToShow: 5,
+      slidesToScroll: 5,
+      arrow: true
+    });
+  });
+</script>
+
+<style media="screen">
+  #titulo {
+    font-size: 6em;
+  }
+</style>
