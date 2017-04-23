@@ -1,10 +1,10 @@
 from flask import redirect, render_template, url_for, Flask, request, flash
-from app import app, login_manager
+from app import app, login_manager, admin_permission
 from app.controllers.user_controller import UserController
 from app.controllers.beer_controller import BeerController
 from app.models.login_form import LoginForm
 from app.core.dao.user_dao import UserDao
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 import json
 
 @login_manager.user_loader
@@ -30,6 +30,7 @@ def beer():
             message=request.args.get('message')
         )
 
+@admin_permission.require()
 @app.route('/beer/new', methods=['GET', 'POST'])
 def new_beer():
     if request.method == 'POST':
@@ -152,23 +153,3 @@ def logout():
     logout_user()
     flash('Logged out!')
     return redirect(url_for('index'))
-#
-# @app.route('/login', methods=['POST', 'GET'])
-# def login():
-#     dao = UserDao()
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         user = dao.validate_login(form.email.data)
-#         if user and user.password == form.password.data:
-#             login_user(user)
-#             flash("Logged in.")
-#             return redirect(url_for('index'))
-#         else:
-#             flash("Invalid login.")
-#     return render_template('login.html', form=form)
-#
-# @app.route('/logout')
-# def logout():
-#     logout_user()
-#     flash("logged out.")
-#     return redirect(url_for('index'))

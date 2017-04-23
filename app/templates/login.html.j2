@@ -1,32 +1,44 @@
 {% extends "_user_base.html.j2" %}
-{% block navbar %}
-  {{ super() }}
-{% endblock navbar %}
 
 {% block body %}
-<div class="">
-  <form action="" method="post">
-    {{ form.csrf_token }}
-    <div class="">
-      <label>Email</label>
-      {{ form.email(class="form-control", placeholder="email@email.com.br") }}
-    </div>
-    {% if form.email.errors %}
-      <p class="">{{ form.errors.email }}</p>
-    {% endif %}
-    <div class="">
-      <label>Passoword</label>
-      {{ form.password(class="form-control") }}
-    </div>
-    {% if form.password.errors %}
-      <p class="">{{ form.errors.email }}</p>
-    {% endif %}
-    <div class="">
-      <label>
-        {{ form.remember_me }} Remember me
-      </label>
-    </div>
-    <button type="submit" name="button" class="ui button">Login</button>
-  </form>
+<div class="ui middle aligned center aligned grid">
+  <div class="seven wide column">
+    <form action="" method="post" class="ui large form">
+      <div class="ui stacked segment">
+        {{ form.csrf_token }}
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            {{ form.email(placeholder="Email") }}
+          </div>
+        </div>
+        {% if form.email.errors %}
+        <p class="ui error message">{{ form.errors.email }}</p>
+        {% endif %}
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            {{ form.password(placeholder="Senha") }}
+          </div>
+        </div>
+        {% if form.password.errors %}
+        <p class="ui error message">{{ form.errors.email }}</p>
+        {% endif %}
+        <div class="two fields">
+          <div class="field">
+            <a href="/new_user">Cadastrar</a>
+          </div>
+          <div class="field">
+            <div class="ui checkbox">
+              {{ form.remember_me }}
+              <label>Lembrar login</label>
+            </div>
+          </div>
+
+        </div>
+        <button type="submit" name="button" class="ui fluid large teal submit button">Login</button>
+      </div>
+    </form>
+  </div>
 </div>
 {% endblock body %}

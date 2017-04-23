@@ -33,7 +33,7 @@ class UserController(object):
         )
         result = SaveCommand.execute(address)
         flash(result.result)
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
 
     @staticmethod
     def update(**kwargs):
