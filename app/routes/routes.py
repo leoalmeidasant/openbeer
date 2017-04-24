@@ -30,7 +30,6 @@ def beer():
             message=request.args.get('message')
         )
 
-@admin_permission.require()
 @app.route('/beer/new', methods=['GET', 'POST'])
 def new_beer():
     if request.method == 'POST':
