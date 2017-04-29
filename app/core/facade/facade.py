@@ -1,5 +1,6 @@
 from app.core.dao.user_dao import UserDao
 from app.core.dao.beer_dao import BeerDao
+from app.core.dao.snack_dao import SnackDao
 from app.core.dao.address_dao import AddressDao
 from app.core.result.result import Result
 from app.core.strategy.validate_name import ValidateName
@@ -14,11 +15,13 @@ class Facade(object):
         user_dao = UserDao()
         beer_dao = BeerDao()
         address_dao = AddressDao()
+        snack_dao = SnackDao()
 
         #adding each dao in map indexing by class name
         self.__map_daos['User'] = user_dao
         self.__map_daos['Beer'] = beer_dao
         self.__map_daos['Address'] = address_dao
+        self.__map_daos['Snack'] = snack_dao
 
         #creating instances of busisness rules to be used
         validate_name = ValidateName()
@@ -41,6 +44,12 @@ class Facade(object):
         rules_update_beer = []
         rules_delete_beer = []
 
+        #list of rules to validate crud of snack
+        rules_save_snack = []
+        rules_search_snack = []
+        rules_update_snack = []
+        rules_delete_snack = []
+
         #adding rules to array
         # rules_save_user.append(validate_name)
 
@@ -48,6 +57,7 @@ class Facade(object):
         map_rules_user = {}
         map_rules_beer = {}
         map_rules_address = {}
+        map_rules_snack = {}
 
         #adding rules to maps
         map_rules_user['SAVE'] = rules_save_user
@@ -65,9 +75,15 @@ class Facade(object):
         map_rules_address['UPDATE'] = rules_update_address
         map_rules_address['DELETE'] = rules_delete_address
 
+        map_rules_snack['SAVE'] = rules_save_snack
+        map_rules_snack['SEARCH'] = rules_search_snack
+        map_rules_snack['UPDATE'] = rules_update_snack
+        map_rules_snack['DELETE'] = rules_delete_snack
+
         self.__map_business_rules['User'] = map_rules_user
         self.__map_business_rules['Beer'] = map_rules_beer
         self.__map_business_rules['Address'] = map_rules_address
+        self.__map_business_rules['Snack'] = map_rules_snack
 
     def save(self, domain):
         r = Result()

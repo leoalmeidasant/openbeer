@@ -1,24 +1,24 @@
 from flask import redirect, render_template, url_for, request, flash, session
 from app import app, login_manager
-from app.controllers.beer_controller import BeerController
+from app.controllers.snack_controller import SnackController
 from app.core.dao.user_dao import UserDao
 from flask_login import login_required
 
-@app.route('/beer')
+@app.route('/snack')
 @login_required
-def beer():
+def snack():
     if session['role'] == 'admin':
-        beers =  BeerController.search()
-        return render_template('beers/index.html.j2',
-                beers=beers,
+        snacks =  SnackController.search()
+        return render_template('snacks/index.html.j2',
+                snacks=snacks,
                 message=request.args.get('message')
             )
     flash('Rota não autorizada')
     return redirect(url_for('index'))
 
-@app.route('/beer/new', methods=['GET', 'POST'])
+@app.route('/snack/new', methods=['GET', 'POST'])
 @login_required
-def new_beer():
+def new_snack():
     if session['role'] == 'admin':
         if request.method == 'POST':
             kwargs = {
@@ -29,18 +29,18 @@ def new_beer():
                 'quantity': request.form['quantity'],
                 'image': request.files.get('image')
             }
-            return BeerController.save(**kwargs)
-        return render_template('beers/new.html.j2', message=request.args.get('message'))
+            return SnackController.save(**kwargs)
+        return render_template('snacks/new.html.j2', message=request.args.get('message'))
     flash('Rota não autorizada')
     return redirect(url_for('index'))
 
-@app.route('/edit_beer/<id>', methods=['GET', 'POST'])
+@app.route('/edit_snack/<id>', methods=['GET', 'POST'])
 @login_required
-def edit_beer(id):
+def edit_snack(id):
     if session['role'] == 'admin':
-        beer = BeerController.search(id)
+        snack = SnackController.search(id)
         if request.method == 'GET':
-            return render_template('beers/edit.html.j2', beer=beer, message=request.args.get('message'))
+            return render_template('snacks/edit.html.j2', snack=snack, message=request.args.get('message'))
         else:
             kwargs = {
                 'id': id,
@@ -50,14 +50,14 @@ def edit_beer(id):
                 'type': request.form['type'],
                 'quantity': request.form['quantity'],
             }
-            return BeerController.update(**kwargs)
+            return SnackController.update(**kwargs)
     flash('Rota não autorizada')
     return redirect(url_for('index'))
 
-@app.route('/delete_beer/<id>', methods=['GET', 'POST'])
+@app.route('/delete_snack/<id>', methods=['GET', 'POST'])
 @login_required
-def delete_beer(id):
+def delete_snack(id):
     if session['role'] == 'admin':
-        return BeerController.delete(id)
+        return SnackController.delete(id)
     flash('Rota não autorizada')
     return redirect(url_for('index'))

@@ -11,8 +11,8 @@
   </head>
   <body>
 
+    <div class="ui container">
     {% block base %}
-    <div class="ui container raised blue segment">
       <div class="ui huge header center aligned" id="titulo">
         OPENBEER
       </div>
@@ -40,17 +40,21 @@
           </div>
           {% if current_user.is_anonymous %}
           <a class="ui item" href="/login">
+            <i class="user icon large"></i>
             Logar
           </a>
           {% else %}
-          <a class="ui item" href="/logout">
-            Deslogar usuário {{ current_user.name }}
+          <a href="" class="item">
+            <i class="in cart icon large"></i>
+            Carrinho
           </a>
-
+          <a class="ui item" href="/logout">
+            <i class="in user icon large"></i>
+            Sair,  ({{ current_user.name }})
+          </a>
           {% endif %}
         </div>
       </div>
-    </div>
     {% endblock base %}
 
     <div class="ui container raised blue segment">
@@ -70,6 +74,7 @@
       {% block body %}
       {% endblock body %}
     </div>
+  </div>
   </body>
 
   <script
@@ -89,6 +94,10 @@
       .transition('fade')
     ;
   });
+
+  // $('logout').click(function (e) {
+  //   $.dropdown();
+  // })
 
   $(document).ready(function(){
     $('.glass').slick({

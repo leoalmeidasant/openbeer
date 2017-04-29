@@ -1,0 +1,37 @@
+{% extends "_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+<a href="/snack/new" class="ui right floated blue button">Cadastrar novo petisco</a>
+<h4 class="ui header">Petiscos</h4>
+<div class="ui divider"></div>
+<div class="ui grid">
+{% for snack in snacks %}
+  <div class="four wide column">
+    <div class="ui card">
+      <div class="image">
+        {% if snack.image %}
+        <img src="static/images/{{ snack.image }}">
+        {% endif %}
+      </div>
+      <div class="content">
+        <a class="header">{{ snack.name }}</a>
+        <div class="meta">
+          <span class="date">{{ snack.type }}</span>
+        </div>
+        <div class="description">
+          {{ snack.description }}
+        </div>
+      </div>
+      <div class="extra content">
+        R${{ snack.value }}
+      </div>
+      <a href="{{url_for('edit_snack', id=snack.id)}}" class="ui button">Editar</a>
+      <a href="{{url_for('delete_snack', id=snack.id)}}" class="ui red button">Remover</a>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endblock body %}

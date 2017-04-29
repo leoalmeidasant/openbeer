@@ -25,9 +25,12 @@
             </div>
           </div>
           <div class="extra content">
-            R${{ beer.value }}
+            R${{ beer.value }}0 - <strong> COMBO 6 unidades</strong>
           </div>
-          <button type="button" name="button" class="ui teal button">+ carrinho</button>
+            <button type="button" name="button" class="ui teal button">
+              <i class="add to cart icon large"></i>
+              Adicionar
+            </button>
         </div>
       </div>
       {% endfor %}
@@ -36,27 +39,30 @@
     <h4 class="ui header">Petiscos</h4>
     <div class="ui divider"></div>
     <div class="ui five column grid glass">
-      {% for beer in beers %}
+      {% for snack in snacks %}
       <div class="column" style="margin: 0.5em;">
         <div class="ui card">
           <div class="image">
-            {% if beer.image %}
-              <img src="static/images/{{ beer.image }}">
+            {% if snack.image %}
+              <img src="static/images/{{ snack.image }}" style="height: 100px;">
             {% endif %}
           </div>
           <div class="content">
-            <a class="header">{{ beer.name }}</a>
+            <a class="header">{{ snack.name }}</a>
             <div class="meta">
-              <span class="date">{{ beer.type }}</span>
+              <span class="date">{{ snack.type }}</span>
             </div>
             <div class="description">
-              {{ beer.description }}
+              {{ snack.description }}
             </div>
           </div>
           <div class="extra content">
-            R${{ beer.value }}
+            R${{ snack.value }}
           </div>
-          <button type="button" name="button" class="ui teal button">+ carrinho</button>
+          <button type="button" name="button" class="ui teal button">
+            <i class="add to cart icon large"></i>
+            Adicionar
+          </button>
         </div>
       </div>
       {% endfor %}
