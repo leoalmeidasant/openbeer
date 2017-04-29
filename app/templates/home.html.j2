@@ -4,12 +4,11 @@
 {% endblock base %}
 
 {% block body %}
-<div class="ui segment">
   <h4 class="ui header">Cervejas</h4>
   <div class="ui divider"></div>
     <div class="ui five column grid glass">
       {% for beer in beers %}
-      <div class="column">
+      <div class="column" style="margin: 0.5em;">
         <div class="ui card">
           <div class="image">
             {% if beer.image %}
@@ -28,6 +27,7 @@
           <div class="extra content">
             R${{ beer.value }}
           </div>
+          <button type="button" name="button" class="ui teal button">+ carrinho</button>
         </div>
       </div>
       {% endfor %}
@@ -37,11 +37,11 @@
     <div class="ui divider"></div>
     <div class="ui five column grid glass">
       {% for beer in beers %}
-      <div class="column">
+      <div class="column" style="margin: 0.5em;">
         <div class="ui card">
           <div class="image">
             {% if beer.image %}
-            <img src="static/images/{{ beer.image }}">
+              <img src="static/images/{{ beer.image }}">
             {% endif %}
           </div>
           <div class="content">
@@ -56,9 +56,9 @@
           <div class="extra content">
             R${{ beer.value }}
           </div>
+          <button type="button" name="button" class="ui teal button">+ carrinho</button>
         </div>
       </div>
       {% endfor %}
     </div>
-</div>
 {% endblock body %}
