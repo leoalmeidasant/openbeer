@@ -1,0 +1,23 @@
+{% extends "_user_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+  <table>
+    <thead>
+      <th>ID#Compra</th>
+      <th>Data</th>
+      <th>Valor</th>
+    </thead>
+    <tbody>
+      {% for item in orders %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.order_date }}</td>
+        <td>R${{ item.total_value }}0</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock body %}

@@ -1,5 +1,6 @@
 from app import db
 from app.models.user import User
+from app.models.order import Order
 
 class UserDao(object):
     def __init__(self):
@@ -30,3 +31,7 @@ class UserDao(object):
     def validate_login(self, email):
         user = User.query.filter(User.email == email).first()
         return user
+
+    def get_buys(self, id):
+        buys = Order.query.filter(Order.client_id == id).all()
+        return buys

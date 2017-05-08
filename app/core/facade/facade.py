@@ -2,6 +2,8 @@ from app.core.dao.user_dao import UserDao
 from app.core.dao.beer_dao import BeerDao
 from app.core.dao.snack_dao import SnackDao
 from app.core.dao.address_dao import AddressDao
+from app.core.dao.order_dao import OrderDao
+from app.core.dao.item_dao import ItemDao
 from app.core.result.result import Result
 from app.core.strategy.validate_name import ValidateName
 from app.core.strategy.get_class_name import GetClassName
@@ -16,12 +18,16 @@ class Facade(object):
         beer_dao = BeerDao()
         address_dao = AddressDao()
         snack_dao = SnackDao()
+        order_dao = OrderDao()
+        item_dao = ItemDao()
 
         #adding each dao in map indexing by class name
         self.__map_daos['User'] = user_dao
         self.__map_daos['Beer'] = beer_dao
         self.__map_daos['Address'] = address_dao
         self.__map_daos['Snack'] = snack_dao
+        self.__map_daos['Order'] = order_dao
+        self.__map_daos['Item'] = item_dao
 
         #creating instances of busisness rules to be used
         validate_name = ValidateName()
@@ -50,6 +56,20 @@ class Facade(object):
         rules_update_snack = []
         rules_delete_snack = []
 
+        #list of rules to validate crud of order
+        rules_save_order = []
+        rules_search_order = []
+        rules_update_order = []
+        rules_delete_order = []
+
+        #list of rules to validate crud of item
+        rules_save_item = []
+        rules_search_item = []
+        rules_update_item = []
+        rules_delete_item = []
+
+        #################################################
+
         #adding rules to array
         # rules_save_user.append(validate_name)
 
@@ -58,6 +78,8 @@ class Facade(object):
         map_rules_beer = {}
         map_rules_address = {}
         map_rules_snack = {}
+        map_rules_order = {}
+        map_rules_item = {}
 
         #adding rules to maps
         map_rules_user['SAVE'] = rules_save_user
@@ -80,10 +102,22 @@ class Facade(object):
         map_rules_snack['UPDATE'] = rules_update_snack
         map_rules_snack['DELETE'] = rules_delete_snack
 
+        map_rules_order['SAVE'] = rules_save_order
+        map_rules_order['SEARCH'] = rules_search_order
+        map_rules_order['UPDATE'] = rules_update_order
+        map_rules_order['DELETE'] = rules_delete_order
+
+        map_rules_item['SAVE'] = rules_save_item
+        map_rules_item['SEARCH'] = rules_search_item
+        map_rules_item['UPDATE'] = rules_update_item
+        map_rules_item['DELETE'] = rules_delete_item
+
         self.__map_business_rules['User'] = map_rules_user
         self.__map_business_rules['Beer'] = map_rules_beer
         self.__map_business_rules['Address'] = map_rules_address
         self.__map_business_rules['Snack'] = map_rules_snack
+        self.__map_business_rules['Order'] = map_rules_order
+        self.__map_business_rules['Item'] = map_rules_item
 
     def save(self, domain):
         r = Result()

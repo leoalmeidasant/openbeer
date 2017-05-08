@@ -44,7 +44,8 @@
             Logar
           </a>
           {% else %}
-          <a href="" class="item">
+          <a href="/buys" class="item">Minhas compras</a>
+          <a href="/cart" class="item">
             <i class="in cart icon large"></i>
             Carrinho
           </a>
@@ -95,10 +96,6 @@
     ;
   });
 
-  // $('logout').click(function (e) {
-  //   $.dropdown();
-  // })
-
   $(document).ready(function(){
     $('.glass').slick({
       infinite: true,
@@ -107,6 +104,10 @@
       arrow: true
     });
   });
+
+  $('select.dropdown')
+  .dropdown()
+  ;
 </script>
 
 <style media="screen">

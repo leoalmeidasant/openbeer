@@ -41,6 +41,10 @@ def login():
         if user and user.password == form.password.data:
             login_user(user)
             session['role'] = user.role
+            session['cart'] = {}
+            session['cart']['beers'] = []
+            session['cart']['snacks'] = []
+            session['cart']['total'] = 0
             if user.role == 'admin':
                 flash("Logged in as admin")
                 return redirect(url_for('beer'))
@@ -53,6 +57,14 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('role', None)
+    session.pop('cart', None)
     logout_user()
     flash('Logged out!')
     return redirect(url_for('index'))
+
+@app.route('/buys')
+@login_required
+def buys():
+    dao = UserDao()
+    orders = dao.get_buys(current_user.id)
+    return render_template('users/buys.html.j2', orders=orders)

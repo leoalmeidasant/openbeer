@@ -8,31 +8,42 @@
   <div class="ui divider"></div>
     <div class="ui five column grid glass">
       {% for beer in beers %}
-      <div class="column" style="margin: 0.5em;">
-        <div class="ui card">
-          <div class="image">
-            {% if beer.image %}
-            <img src="static/images/{{ beer.image }}">
-            {% endif %}
-          </div>
-          <div class="content">
-            <a class="header">{{ beer.name }}</a>
-            <div class="meta">
-              <span class="date">{{ beer.type }}</span>
+      <form class="" action="{{ url_for('add_beer_cart') }}" method="post">
+        <input type="text" name="id" value="{{beer.id}}" hidden="true">
+        <div class="column" style="margin: 0.5em;">
+          <div class="ui card">
+            <div class="image">
+              {% if beer.image %}
+              <img src="static/images/{{ beer.image }}">
+              {% endif %}
             </div>
-            <div class="description">
-              {{ beer.description }}
+            <div class="content">
+              <a class="header">{{ beer.name }}</a>
+              <div class="meta">
+                <span class="date">{{ beer.type }}</span>
+              </div>
+              <div class="description">
+                {{ beer.description }}
+              </div>
             </div>
-          </div>
-          <div class="extra content">
-            R${{ beer.value }}0 - <strong> COMBO 6 unidades</strong>
-          </div>
-            <button type="button" name="button" class="ui teal button">
+            <div class="extra content">
+              R${{ beer.value }}0 - <strong> COMBO 6 unidades</strong>
+            </div>
+            <div class="extra content">
+              <label for="quantity">Quantidade</label>
+              <select class="" name="quantity">
+                {% for i in range(1, beer.quantity) %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="ui teal button">
               <i class="add to cart icon large"></i>
               Adicionar
             </button>
+          </div>
         </div>
-      </div>
+      </form>
       {% endfor %}
     </div>
     <div class="ui divider"></div>
@@ -40,31 +51,42 @@
     <div class="ui divider"></div>
     <div class="ui five column grid glass">
       {% for snack in snacks %}
-      <div class="column" style="margin: 0.5em;">
-        <div class="ui card">
-          <div class="image">
-            {% if snack.image %}
+      <form class="" action="{{ url_for('add_snack_cart') }}" method="post">
+        <input type="text" name="id" value="{{snack.id}}" hidden="true">
+        <div class="column" style="margin: 0.5em;">
+          <div class="ui card">
+            <div class="image">
+              {% if snack.image %}
               <img src="static/images/{{ snack.image }}" style="height: 100px;">
-            {% endif %}
-          </div>
-          <div class="content">
-            <a class="header">{{ snack.name }}</a>
-            <div class="meta">
-              <span class="date">{{ snack.type }}</span>
+              {% endif %}
             </div>
-            <div class="description">
-              {{ snack.description }}
+            <div class="content">
+              <a class="header">{{ snack.name }}</a>
+              <div class="meta">
+                <span class="date">{{ snack.type }}</span>
+              </div>
+              <div class="description">
+                {{ snack.description }}
+              </div>
             </div>
+            <div class="extra content">
+              R${{ snack.value }}
+            </div>
+            <div class="extra content">
+              <label for="quantity">Quantidade</label>
+              <select class="ui selection" name="quantity">
+                {% for i in range(1, snack.quantity) %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="ui teal button">
+              <i class="add to cart icon large"></i>
+              Adicionar
+            </button>
           </div>
-          <div class="extra content">
-            R${{ snack.value }}
-          </div>
-          <button type="button" name="button" class="ui teal button">
-            <i class="add to cart icon large"></i>
-            Adicionar
-          </button>
         </div>
-      </div>
+      </form>
       {% endfor %}
     </div>
 {% endblock body %}
