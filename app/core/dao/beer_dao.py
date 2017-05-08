@@ -1,5 +1,6 @@
 import datetime
 from app import db
+from sqlalchemy import desc, asc
 from app.models.beer import Beer
 
 class BeerDao(object):
@@ -15,6 +16,7 @@ class BeerDao(object):
             description=beer.description,
             value=beer.value,
             type=beer.type,
+            mark=beer.mark,
             quantity=beer.quantity,
             updated_at=datetime.datetime.now()
         )
@@ -30,7 +32,7 @@ class BeerDao(object):
 
     def search(self, beer_id=None):
         if not beer_id:
-            beers = Beer.query.all()
+            beers = Beer.query.order_by(asc(Beer.name)).all()
             return beers
         else:
             beer = Beer.query.filter(Beer.id == beer_id).first()

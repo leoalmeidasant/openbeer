@@ -46,7 +46,21 @@
       </div>
     </div>
     {% endblock base %}
-    <div class="ui container raised red segment">
+
+    <div class="ui container raised blue segment">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="ui message">
+          <i class="close icon"></i>
+          <div class="header flashes">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      {% endwith %}
+
       {% block body %}
       {% endblock body %}
     </div>

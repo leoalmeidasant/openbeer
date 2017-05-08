@@ -15,7 +15,7 @@
 {% endif %}
 <form class="ui form" action="{{ url_for('edit_beer', id=beer.id) }}" method="post" enctype="multipart/form-data">
 <h4 class="ui dividing header">Dados da cerveja</h4>
-<div class="two fields">
+<div class="three fields">
   <div class="field">
     <label for="name">Nome</label>
     <input type="text" name="name" placeholder="Nome" required="true" value="{{beer.name}}">
@@ -23,6 +23,10 @@
   <div class="field">
     <label for="description">Descrição</label>
     <input type="text" name="description" placeholder="Descrição" required="true" value="{{beer.description}}">
+  </div>
+  <div class="field">
+    <label for="name">Marca</label>
+    <input type="text" name="mark" placeholder="Ex: Baden Baden" required="true" value="{{beer.mark}}">
   </div>
 </div>
 <div class="three fields">
@@ -46,7 +50,7 @@
 <div class="field">
   <label for="image">Imagem</label>
   <!-- <input type="file" name="image" accept="image/*" value="{{beer.image}}"> -->
-  <img src="/static/images/{{beer.image}}" alt="">
+  <img src="/static/images/{{beer.image}}" alt="" style="width: 200px;">
 </div>
 <button type="submit" name="button" class="ui primary button">Salvar</button>
 <a href="/beer" class="ui button">Cancelar</a>

@@ -6,32 +6,36 @@
 {% block body %}
 <a href="/beer/new" class="ui right floated blue button">Cadastrar nova cerveja</a>
 <h4 class="ui header">Cervejas</h4>
-<div class="ui divider"></div>
-<div class="ui grid">
-{% for beer in beers %}
-  <div class="four wide column">
-    <div class="ui card">
-      <div class="image">
-        {% if beer.image %}
-        <img src="static/images/{{ beer.image }}">
-        {% endif %}
-      </div>
-      <div class="content">
-        <a class="header">{{ beer.name }}</a>
-        <div class="meta">
-          <span class="date">{{ beer.type }}</span>
-        </div>
-        <div class="description">
-          {{ beer.description }}
-        </div>
-      </div>
-      <div class="extra content">
-        R${{ beer.value }}
-      </div>
-      <a href="{{url_for('edit_beer', id=beer.id)}}" class="ui button">Editar</a>
-      <a href="{{url_for('delete_beer', id=beer.id)}}" class="ui red button">Remover</a>
-    </div>
-  </div>
-{% endfor %}
+<div class="ui container grid">
+  <table class="ui table">
+    <thead>
+      <th>Imagem</th>
+      <th>Nome</th>
+      <th>Tipo</th>
+      <th>Marca</th>
+      <th>Preço(Unitário)</th>
+      <th>Preço(Pack com 6)</th>
+      <th>Editar</th>
+      <th>Excluir</th>
+    </thead>
+    {% for beer in beers %}
+    <tbody>
+      <tr>
+        <td>
+          {% if beer.image %}
+          <img src="static/images/{{ beer.image }}" style="width: 50px;">
+          {% endif %}
+        </td>
+        <td>{{ beer.name }}</td>
+        <td>{{ beer.type }}</td>
+        <td>{{ beer.mark }}</td>
+        <td>{{ beer.value }}</td>
+        <td>{{ beer.value * 6 }}</td>
+        <td><a href="{{url_for('edit_beer', id=beer.id)}}" class="ui button">Editar</a></td>
+        <td><a href="{{url_for('delete_beer', id=beer.id)}}" class="ui red button">Remover</a></td>
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
 </div>
 {% endblock body %}

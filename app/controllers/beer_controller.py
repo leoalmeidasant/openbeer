@@ -1,5 +1,5 @@
 import datetime
-from flask import redirect, render_template, url_for
+from flask import redirect, render_template, url_for, flash
 from app import db
 from app.models.beer import Beer
 from app.core.strategy.upload_image import UploadImage
@@ -17,6 +17,7 @@ class BeerController(object):
             description=kwargs['description'],
             value=kwargs['value'],
             type=kwargs['type'],
+            mark=kwargs['mark'],
             quantity=kwargs['quantity'],
             image=kwargs['image'].filename,
             created_at=datetime.datetime.now(),
@@ -34,12 +35,14 @@ class BeerController(object):
             name=kwargs['name'],
             description=kwargs['description'],
             value=kwargs['value'],
+            mark=kwargs['mark'],
             type=kwargs['type'],
             quantity=kwargs['quantity'],
             updated_at=datetime.datetime.now()
         )
         result = UpdateCommand.execute(beer)
-        return redirect(url_for('edit_beer', id=kwargs['id'], message=result.result))
+        flash(result.result)
+        return redirect(url_for('beer'))
 
     @staticmethod
     def delete(beer_id):

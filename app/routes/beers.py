@@ -26,6 +26,7 @@ def new_beer():
                 'description': request.form['description'],
                 'value': request.form['value'],
                 'type': request.form['type'],
+                'mark': request.form['mark'],
                 'quantity': request.form['quantity'],
                 'image': request.files.get('image')
             }
@@ -48,6 +49,7 @@ def edit_beer(id):
                 'description': request.form['description'],
                 'value': request.form['value'],
                 'type': request.form['type'],
+                'mark': request.form['mark'],
                 'quantity': request.form['quantity'],
             }
             return BeerController.update(**kwargs)

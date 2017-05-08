@@ -78,14 +78,25 @@ class CartController(object):
         SaveCommand.execute(order)
         items_list = ItemList.make_list()
         for i in items_list:
-            item = Item(
-                item_id=i['id'],
-                quantity=i['quantity'],
-                value=i['total_value'],
-                type=i['type'],
-                created_at=datetime.today(),
-                updated_at=datetime.today()
-            )
+            if i['type'] == 'beer':
+                item = Item(
+                    beer_id=i['id'],
+                    quantity=i['quantity'],
+                    value=i['total_value'],
+                    type=i['type'],
+                    created_at=datetime.today(),
+                    updated_at=datetime.today()
+                )
+            else:
+                item = Item(
+                    snack_id=i['id'],
+                    quantity=i['quantity'],
+                    value=i['total_value'],
+                    type=i['type'],
+                    created_at=datetime.today(),
+                    updated_at=datetime.today()
+                )
+
             SaveCommand.execute(item)
 
             item_order = ItemOrder(
@@ -98,12 +109,12 @@ class CartController(object):
 
             if item.type == 'beer':
                 UpdateStock.update_beer(
-                    id=item.item_id,
+                    id=item.beer_id,
                     quantity=item.quantity
                 )
             else:
                 UpdateStock.update_snack(
-                    id=item.item_id,
+                    id=item.snack_id,
                     quantity=item.quantity
                 )
             db.session.commit()

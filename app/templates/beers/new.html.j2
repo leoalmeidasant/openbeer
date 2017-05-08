@@ -16,7 +16,7 @@
 {% endif %}
 <form class="ui form" action="{{ url_for('new_beer') }}" method="post" enctype="multipart/form-data">
 <h4 class="ui dividing header">Dados da cerveja</h4>
-<div class="two fields">
+<div class="three fields">
   <div class="field">
     <label for="name">Nome</label>
     <input type="text" name="name" placeholder="Nome" required="true">
@@ -24,6 +24,10 @@
   <div class="field">
     <label for="description">Descrição</label>
     <input type="text" name="description" placeholder="Descrição" required="true">
+  </div>
+  <div class="field">
+    <label for="description">Marca</label>
+    <input type="text" name="mark" placeholder="Ex: Brahma" required="true">
   </div>
 </div>
 <div class="three fields">

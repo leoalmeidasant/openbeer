@@ -3,7 +3,8 @@ from app import db
 class Item(db.Model):
     __tablename__ = "items"
     id = db.Column(db.Integer, primary_key=True)
-    item_id = db.Column(db.Integer, index=True)
+    beer_id = db.Column(db.Integer, db.ForeignKey('beers.id'),index=True)
+    snack_id = db.Column(db.Integer, db.ForeignKey('snacks.id'), index=True)
     quantity = db.Column(db.Integer)
     value = db.Column(db.Float)
     type = db.Column(db.String)
