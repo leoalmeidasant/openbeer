@@ -5,5 +5,6 @@ class ItemOrder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     item_id = db.Column(db.Integer, db.ForeignKey('items.id'), index=True)
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), index=True)
+    item = db.relationship('Item', backref='person')
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)

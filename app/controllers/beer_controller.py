@@ -54,5 +54,4 @@ class BeerController(object):
     def search(beer_id=None):
         beer = Beer()
         result = SearchCommand.execute(beer, beer_id)
-        # import ipdb; ipdb.set_trace()
         return result.result

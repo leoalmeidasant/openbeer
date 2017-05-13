@@ -4,9 +4,8 @@
 {% endblock base %}
 
 {% block body %}
-<div class="ui grid">
-  <div class="tem wide column">
-    
-  </div>
+<div class="ui success message">
+  Pedido número: {{ order.id }} <br>
+  Status: {{ order.status }}
 </div>
 {% endblock body %}

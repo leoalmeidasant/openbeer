@@ -8,12 +8,13 @@ from app.core.result.result import Result
 from app.core.strategy.validate_name import ValidateName
 from app.core.strategy.get_class_name import GetClassName
 
+
 class Facade(object):
     def __init__(self):
         self.__map_daos = {}
         self.__map_business_rules = {}
 
-        #create instances of DAO classes
+        # create instances of DAO classes
         user_dao = UserDao()
         beer_dao = BeerDao()
         address_dao = AddressDao()
@@ -21,7 +22,7 @@ class Facade(object):
         order_dao = OrderDao()
         item_dao = ItemDao()
 
-        #adding each dao in map indexing by class name
+        # adding each dao in map indexing by class name
         self.__map_daos['User'] = user_dao
         self.__map_daos['Beer'] = beer_dao
         self.__map_daos['Address'] = address_dao
@@ -29,40 +30,40 @@ class Facade(object):
         self.__map_daos['Order'] = order_dao
         self.__map_daos['Item'] = item_dao
 
-        #creating instances of busisness rules to be used
+        # creating instances of busisness rules to be used
         validate_name = ValidateName()
 
-        #lists of rules to validate crud of user
+        # lists of rules to validate crud of user
         rules_save_user = []
         rules_search_user = []
         rules_update_user = []
         rules_delete_user = []
 
-        #list of rules to validate crud of address
+        # list of rules to validate crud of address
         rules_save_address = []
         rules_search_address = []
         rules_update_address = []
         rules_delete_address = []
 
-        #list of rules to validate crud of beer
+        # list of rules to validate crud of beer
         rules_save_beer = []
         rules_search_beer = []
         rules_update_beer = []
         rules_delete_beer = []
 
-        #list of rules to validate crud of snack
+        # list of rules to validate crud of snack
         rules_save_snack = []
         rules_search_snack = []
         rules_update_snack = []
         rules_delete_snack = []
 
-        #list of rules to validate crud of order
+        # list of rules to validate crud of order
         rules_save_order = []
         rules_search_order = []
         rules_update_order = []
         rules_delete_order = []
 
-        #list of rules to validate crud of item
+        # list of rules to validate crud of item
         rules_save_item = []
         rules_search_item = []
         rules_update_item = []
@@ -70,10 +71,10 @@ class Facade(object):
 
         #################################################
 
-        #adding rules to array
+        # adding rules to array
         # rules_save_user.append(validate_name)
 
-        #map to agroup rules
+        # map to agroup rules
         map_rules_user = {}
         map_rules_beer = {}
         map_rules_address = {}
@@ -81,7 +82,7 @@ class Facade(object):
         map_rules_order = {}
         map_rules_item = {}
 
-        #adding rules to maps
+        # adding rules to maps
         map_rules_user['SAVE'] = rules_save_user
         map_rules_user['SEARCH'] = rules_search_user
         map_rules_user['UPDATE'] = rules_update_user

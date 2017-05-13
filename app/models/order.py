@@ -1,5 +1,6 @@
 from app import db
 
+
 class Order(db.Model):
     __tablename__ = "orders"
     id = db.Column(db.Integer, primary_key=True)
@@ -7,6 +8,8 @@ class Order(db.Model):
     order_date = db.Column(db.DateTime)
     payment_form = db.Column(db.String)
     total_value = db.Column(db.Float)
+    status = db.Column(db.String)
     client_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
+    items = db.relationship('ItemOrder', backref='person', lazy='dynamic')
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)

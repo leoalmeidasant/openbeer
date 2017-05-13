@@ -8,5 +8,7 @@ class Item(db.Model):
     quantity = db.Column(db.Integer)
     value = db.Column(db.Float)
     type = db.Column(db.String)
+    beer = db.relationship('Beer', backref='person')
+    snack = db.relationship('Snack', backref='person')
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)

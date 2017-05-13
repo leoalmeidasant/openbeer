@@ -1,0 +1,40 @@
+{% extends "_user_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+<div class="ui center aligned three column grid">
+  <div class="row">
+    {% for address in addresses %}
+    <div class="column">
+      <div class="ui vertical fluid menu">
+        <div class="header item">
+          Endereço
+        </div>
+        <div class="item">
+          <b>Rua:</b> {{ address.street }}
+        </div>
+        <div class="item">
+          <b>Número:</b> {{ address.number }}
+        </div>
+        <div class="item">
+          <b>Bairro:</b> {{ address.district }}
+        </div>
+        <div class="item">
+          <b>Cidade:</b> {{ address.city }}
+        </div>
+        <div class="item">
+          <b>CEP:</b> {{ address.zip_code }}
+        </div>
+        <div class="item">
+          <a href="/att_cart/{{loop.index - 1}}" class="ui blue button" name="button">Selecionar</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <a href="/new_address" class="ui teal button">Cadastar novo endereço</a>
+  <a href="/cart" class="ui red button">Voltar</a>
+</div>
+{% endblock body %}

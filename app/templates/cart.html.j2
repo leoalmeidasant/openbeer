@@ -4,7 +4,7 @@
 {% endblock base %}
 
 {% block body %}
-<div class="ui grid">
+
   {% if session['cart']['beers'] or session['cart']['snacks'] %}
     <div class="ten wide column">
       <h2 class="ui header">Itens</h2>
@@ -54,24 +54,35 @@
         </tbody>
       </table>
     </div>
-    <div class="six wide column">
-      <h2 class="ui header">Endereço de Entrega</h2>
-      <div class="ui segment">
-
-        <label for=""><b>Sub-total:</b></label> R${{ session['cart']['total'] }}0 <br>
-        <label for=""><b>Frete:</b></label> R$5.00 <br>
-        <label for=""><b>Total:</b></label> R${{ session['cart']['total'] + 5 }}0
-        <div class="ui divider"></div>
-        <label for=""><b>Bairro:</b></label> {{current_user.addresses[0].district}} <br>
-        <label for=""><b>Rua:</b></label> {{current_user.addresses[0].street}} <br>
-        <label for=""><b>Número:</b></label> {{current_user.addresses[0].number}} <br>
-        <label for=""><b>CEP:</b></label> {{current_user.addresses[0].zip_code}} <br><br>
-        <a href="/finalizing" name="button" class="ui teal button block">Finalizar compra</a>
-        <a href="/" class="ui red button block">Cancelar</a>
+    <div class="ui segment">
+      <div class="ui five column centered grid">
+          <!-- <h2 class="ui header">Sub-Total</h2>
+          <label for=""><b>Sub-total:</b></label> R${{ session['cart']['total'] }}0 <br>
+          <label for=""><b>Frete:</b></label> R$5.00 <br>
+          <label for=""><b>Total:</b></label> R${{ session['cart']['total'] + 5 }}0 -->
+        <div class="column">
+          <h2 class="ui header">Endereço Padrão</h2>
+          {% if not addresses %}
+            <label for=""><b>Rua:</b></label> {{current_user.addresses[0].street}} <br>
+            <label for=""><b>Número:</b></label> {{current_user.addresses[0].number}} <br>
+            <label for=""><b>Bairro:</b></label> {{current_user.addresses[0].district}} <br>
+            <label for=""><b>Cidade:</b></label> {{current_user.addresses[0].city}} <br>
+            <label for=""><b>CEP:</b></label> {{current_user.addresses[0].zip_code}} <br><br>
+          {% else %}
+            <label for=""><b>Rua:</b></label> {{addresses[index].street}} <br>
+            <label for=""><b>Número:</b></label> {{addresses[index].number}} <br>
+            <label for=""><b>Bairro:</b></label> {{addresses[index].district}} <br>
+            <label for=""><b>Cidade:</b></label> {{addresses[index].city}} <br>
+            <label for=""><b>CEP:</b></label> {{addresses[index].zip_code}} <br><br>
+          {% endif %}
+          <a href="/select_address" name="button" class="ui teal button block">Selecionar outro endereço</a>
+        </div>
       </div>
     </div>
+    <a href="/finalizing" name="button" class="ui teal button block">Efetuar pagamento</a>
+    <a href="/" class="ui red button block">Voltar</a>
   {% else %}
     <h1 class="ui header">Não há itens no carrinho!</h1>
   {% endif %}
-</div>
+
 {% endblock body %}

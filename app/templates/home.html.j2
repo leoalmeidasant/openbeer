@@ -29,6 +29,7 @@
             <div class="extra content">
               R${{ beer.value }}0 - <strong> COMBO 6 unidades</strong>
             </div>
+            {% if beer.quantity > 1 %}
             <div class="extra content">
               <label for="quantity">Quantidade</label>
               <select class="" name="quantity">
@@ -41,6 +42,11 @@
               <i class="add to cart icon large"></i>
               Adicionar
             </button>
+            {% else %}
+            <button type="submit" class="ui teal button" disabled="true">
+              Produto não disponível
+            </button>
+            {% endif %}
           </div>
         </div>
       </form>

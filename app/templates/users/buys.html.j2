@@ -4,18 +4,20 @@
 {% endblock base %}
 
 {% block body %}
-  <table>
+  <table class="ui table">
     <thead>
       <th>ID#Compra</th>
       <th>Data</th>
       <th>Valor</th>
+      <th>Status</th>
     </thead>
     <tbody>
       {% for item in orders %}
       <tr>
-        <td>{{ item.id }}</td>
-        <td>{{ item.order_date }}</td>
+        <td><a href="/buy_details/{{item.id}}">{{ item.id }}</a></td>
+        <td>{{ item.order_date.date().strftime('%d/%m/%y')}}</td>
         <td>R${{ item.total_value }}0</td>
+        <td>{{ item.status }}</td>
       </tr>
       {% endfor %}
     </tbody>

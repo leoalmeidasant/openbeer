@@ -28,6 +28,7 @@ class UserController(object):
             street=kwargs['address']['street'],
             number=kwargs['address']['number'],
             district=kwargs['address']['district'],
+            city=kwargs['address']['city'],
             user_id=user.id,
             created_at=datetime.datetime.now(),
             updated_at=datetime.datetime.now()
@@ -63,4 +64,19 @@ class UserController(object):
         result = SearchCommand.execute(user, user_id)
         if not user_id:
             return render_template('index.html', users=result.resut)
+        return result.result
+
+    @staticmethod
+    def new_address(**kwargs):
+        address = Address(
+            zip_code=kwargs['zip_code'],
+            street=kwargs['street'],
+            number=kwargs['number'],
+            district=kwargs['district'],
+            city=kwargs['city'],
+            user_id=kwargs['user_id'],
+            created_at=datetime.datetime.now(),
+            updated_at=datetime.datetime.now()
+        )
+        result = SaveCommand.execute(address)
         return result.result

@@ -22,6 +22,5 @@ def sell_per_mark():
             join(Item, Item.beer_id == Beer.id).\
             group_by(Beer.mark).\
             all()
-    # import ipdb; ipdb.set_trace()
     schema = SellSchema(many=True).dump(data)
     return jsonify(schema)
