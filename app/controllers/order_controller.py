@@ -30,8 +30,9 @@ class OrderController(object):
             order_date=datetime.today(),
             payment_form='money',
             total_value=session['cart']['total'] + 5,
-            status='aguardando pagamento',
+            status='Aguardando aprovação de pagamento',
             client_id=current_user.id,
+            delivery_address_id=session['selected_address'],
             created_at=datetime.today(),
             updated_at=datetime.today()
         )

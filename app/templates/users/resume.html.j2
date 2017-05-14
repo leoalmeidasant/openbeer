@@ -4,8 +4,70 @@
 {% endblock base %}
 
 {% block body %}
-<div class="ui success message">
-  Pedido número: {{ order.id }} <br>
-  Status: {{ order.status }}
+<h2 class="ui header center aligned">Resumo de Compra</h2>
+<div class="ui divider"></div>
+<div class="ui three column grid">
+  <div class="column">
+    <h5 class="ui top attached center aligned blue header">Sub-total</h5>
+    <div class="ui center aligned attached segment">
+      <div class="ui list">
+        <div class="item"><label for=""><b>Sub-total:</b></label> R${{ session['cart']['total'] }}0</div>
+        <div class="item"><label for=""><b>Frete:</b></label> R$5.00</div>
+        <div class="item"><label for=""><b>Total:</b></label> R${{ session['cart']['total'] + 5 }}0</div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <h5 class="ui top attached center aligned blue header">Endereço</h5>
+    <div class="ui center aligned attached segment">
+      <div class="ui list">
+        <div class="item">
+            <label for=""><b>Rua:</b></label> {{session['address']['street']}}
+        </div>
+        <div class="item">
+          <label for=""><b>Número:</b></label> {{session['address']['number']}}
+        </div>
+        <div class="item">
+          <label for=""><b>Bairro:</b></label> {{session['address']['district']}}
+        </div>
+        <div class="item">
+          <label for=""><b>Cidade:</b></label> {{session['address']['city']}}
+        </div>
+        <div class="item">
+          <label for=""><b>CEP:</b></label> {{session['address']['zip_code']}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <h5 class="ui top attached center aligned blue header">Forma de pagamento</h5>
+    <div class="ui center aligned attached segment">
+      <div class="ui list">
+        {% if session['card'] %}
+          <div class="item">
+            <label for=""><b>Tipo:</b></label> {{session['payment_form']}}
+          </div>
+          <div class="item">
+              <label for=""><b>Nome do titular:</b></label> {{session['card']['name']}}
+          </div>
+          <div class="item">
+            <label for=""><b>Bandeira:</b></label> {{session['card']['flag']}}
+          </div>
+          <div class="item">
+            <label for=""><b>Parcelas:</b></label> {{session['parts']}}
+          </div>
+        {% else %}
+        <div class="item">
+          <label for=""><b>Tipo:</b></label> {{session['payment_form']}}
+        </div>
+        <div class="item">
+          <label for=""><b>Parcelas:</b></label> {{session['parts']}}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </div>
+<a href="/finalizing" class="ui teal button">Confirmar</a>
+<a href="#" class="ui red button">Cancelar</a>
 {% endblock body %}

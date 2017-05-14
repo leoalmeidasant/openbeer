@@ -1,0 +1,28 @@
+{% extends "_user_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+  <div class="inline fields">
+    <label for="fruit">Forma de pagamento:</label>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="payment_form" checked="" tabindex="0" class="hidden">
+        <label>Cartão</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="payment_form" checked="" tabindex="0" class="hidden">
+        <label>Dinheiro</label>
+      </div>
+    </div>
+  </div>
+{% endblock body %}
+
+<script type="text/javascript">
+$('.ui.radio.checkbox')
+.checkbox()
+;
+</script>

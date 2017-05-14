@@ -43,18 +43,45 @@ def remove_snack_cart(id):
 def cart():
     return render_template('cart.html.j2')
 
-@app.route('/resume')
-@login_required
-def resume():
-    buy_resume = CartController.calc_cart()
-    return render_template('resume.html.j2')
+# @app.route('/resume')
+# @login_required
+# def resume():
+#     buy_resume = CartController.calc_cart()
+#     return render_template('resume.html.j2')
 
 @app.route('/finalizing')
 @login_required
 def finalizing_shop():
     result = OrderController.finalizing_shop()
     flash('Compra efetuada com sucesso!')
-    return render_template('users/resume.html.j2', order=result)
+    return render_template('end_buy.html.j2', order=result)
+
+@app.route('/resume', methods=['POST'])
+def resume():
+    address = {
+        'street': request.form.get('street'),
+        'number': request.form.get('number'),
+        'district': request.form.get('district'),
+        'city': request.form.get('city'),
+        'zip_code': request.form.get('zip_code')
+    }
+
+    session['address'] = address
+
+    if request.form.get('payment_form') == 'card':
+        card = {
+            'name': request.form.get('name'),
+            'number': request.form.get('card_number'),
+            'flag': request.form.get('card[type]'),
+            'expiration': request.form.get('expiration'),
+            'code': request.form.get('code')
+        }
+        session['card'] = card
+        session['payment_form'] = 'Cartão'
+    else:
+        session['payment_form'] = 'Dinheiro'
+        session['parts'] = 'Á vista'
+    return render_template('users/resume.html.j2')
 
 @app.route('/select_address')
 @login_required
@@ -81,4 +108,9 @@ def new_address():
 @app.route('/att_cart/<index>')
 def att_cart(index):
     addresses = Address.query.filter(Address.user_id == current_user.id).all()
+    session['selected_address'] = addresses[int(index)].id
     return render_template('cart.html.j2', index=int(index), addresses=addresses)
+
+@app.route('/select_card')
+def select_card():
+    return render_template('users/select_card.html.j2')

@@ -1,0 +1,17 @@
+{% extends "_user_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+  <div class="ui message">
+    <div class="ui list">
+      <div class="item">
+        <b>Id da Compra:</b> {{ order.id }}
+      </div>
+      <div class="item">
+        <b>Status:</b> {{ order.status }}
+      </div>
+    </div>
+  </div>
+{% endblock %}

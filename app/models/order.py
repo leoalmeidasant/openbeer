@@ -9,6 +9,7 @@ class Order(db.Model):
     payment_form = db.Column(db.String)
     total_value = db.Column(db.Float)
     status = db.Column(db.String)
+    delivery_address_id = db.Column(db.Integer, db.ForeignKey('address.id'), index=True)
     client_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
     items = db.relationship('ItemOrder', backref='person', lazy='dynamic')
     created_at = db.Column(db.DateTime)
