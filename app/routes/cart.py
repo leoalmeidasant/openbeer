@@ -43,12 +43,6 @@ def remove_snack_cart(id):
 def cart():
     return render_template('cart.html.j2')
 
-# @app.route('/resume')
-# @login_required
-# def resume():
-#     buy_resume = CartController.calc_cart()
-#     return render_template('resume.html.j2')
-
 @app.route('/finalizing')
 @login_required
 def finalizing_shop():
@@ -114,3 +108,8 @@ def att_cart(index):
 @app.route('/select_card')
 def select_card():
     return render_template('users/select_card.html.j2')
+
+@app.route('/admin/orders')
+def admin_orders():
+    orders = OrderController.get_all()
+    return render_template('orders_panel.html.j2', orders=orders)

@@ -4,7 +4,7 @@
 {% endblock base %}
 
 {% block body %}
-<table class="ui table">
+<table class="ui center aligned table">
   <thead>
     <th>Imagem</th>
     <th>Nome</th>
@@ -12,6 +12,7 @@
     <th>Preço</th>
     <th>Quantidade</th>
     <th>Valor Total</th>
+    <th colspan="2">Opções</th>
   </thead>
   {% for item in items %}
     <tbody>
@@ -29,9 +30,10 @@
         {% endif %}
         <td>{{item.item.quantity}}</td>
         <td>R${{item.item.value}}0</td>
+        <td><button type="button" class="ui teal button" name="button">Trocar</button></td>
+        <td><button type="button" class="ui blue button" name="button">Devolução</button></td>
       </tr>
     </tbody>
   {% endfor %}
 </table>
-<a href="/buys" class="ui button teal">Voltar</a>
 {% endblock body %}

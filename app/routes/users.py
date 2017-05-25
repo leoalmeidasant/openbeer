@@ -76,7 +76,23 @@ def buys():
     return render_template('users/buys.html.j2', orders=orders.result)
 
 @app.route('/buy_details/<id>')
+@login_required
 def buy_details(id):
     items = OrderController.get_order_items(id)
-    # import ipdb; ipdb.set_trace()
     return render_template('users/details.html.j2', items=items)
+
+@app.route('/admin_buy_details/<id>')
+@login_required
+def admin_buy_details(id):
+    items = OrderController.get_order_items(id)
+    return render_template('admin_details.html.j2', items=items)
+
+
+@app.route('/att_order_status', methods=['POST'])
+@login_required
+def att_order_status():
+    id = request.form.get('id')
+    status = request.form.get('status')
+    result = OrderController.update_status(id, status)
+    flash(result)
+    return redirect(url_for('admin_orders'))

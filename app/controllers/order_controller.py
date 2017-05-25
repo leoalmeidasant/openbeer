@@ -5,12 +5,16 @@ from flask_login import current_user
 from app.models.order import Order
 from app.models.item import Item
 from app.models.item_order import ItemOrder
+from app.models.beer import Beer
+from app.models.snack import Snack
 from app.controllers.command.save_command import SaveCommand
 from app.controllers.command.search_command import SearchCommand
 from app.controllers.command.update_command import UpdateCommand
 from app.controllers.command.delete_command import DeleteCommand
+from app.controllers.command.update_stock_command import UpdateStockCommand
 from app.core.strategy.make_item_list import ItemList
 from app.core.strategy.update_stock import UpdateStock
+from app.core.dao.order_dao import OrderDao
 
 class OrderController(object):
 
@@ -19,16 +23,25 @@ class OrderController(object):
         order = Order()
         return SearchCommand.execute(order)
 
+    def get_all():
+        orders = Order.query.all()
+        return orders
+
     def get_order_items(id):
         items = ItemOrder.query.filter(ItemOrder.order_id == id).all()
         return items
+
+    def update_status(id, status):
+        order_dao = OrderDao()
+        result = order_dao.update_status(id, status)
+        return result
 
     @staticmethod
     def finalizing_shop():
         order = Order(
             fare=5,
             order_date=datetime.today(),
-            payment_form='money',
+            payment_form=session['payment_form'],
             total_value=session['cart']['total'] + 5,
             status='Aguardando aprovação de pagamento',
             client_id=current_user.id,
@@ -57,8 +70,20 @@ class OrderController(object):
                     created_at=datetime.today(),
                     updated_at=datetime.today()
                 )
-
             SaveCommand.execute(item)
+
+            if item.type == 'beer':
+                beer = Beer(
+                    id=item.beer_id,
+                    quantity=item.quantity
+                )
+                UpdateStockCommand.execute(beer)
+            else:
+                snack = Snack(
+                    id=item.snack_id,
+                    quantity=item.quantity
+                )
+                UpdateStockCommand.execute(snack)
 
             item_order = ItemOrder(
                 item_id=item.id,
@@ -66,19 +91,8 @@ class OrderController(object):
                 created_at=datetime.today(),
                 updated_at=datetime.today()
             )
-            db.session.add(item_order)
+            SaveCommand.execute(item_order)
 
-            if item.type == 'beer':
-                UpdateStock.update_beer(
-                    id=item.beer_id,
-                    quantity=item.quantity
-                )
-            else:
-                UpdateStock.update_snack(
-                    id=item.snack_id,
-                    quantity=item.quantity
-                )
-            db.session.commit()
             session['cart']['beers'] = []
             session['cart']['snacks'] = []
             session['cart']['total'] = 0

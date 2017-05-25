@@ -24,6 +24,12 @@ class BeerDao(object):
         db.session.commit()
         return 'Produto alterado com sucesso!'
 
+    def update_stock(self, object):
+        beer = Beer.query.filter(Beer.id == object.id).first()
+        beer.quantity = beer.quantity - int(object.quantity)
+        beer.updated_at = datetime.datetime.today()
+        db.session.commit()
+
     def delete(self, beer_id):
         beer = Beer.query.filter(Beer.id == beer_id).first()
         db.session.delete(beer)

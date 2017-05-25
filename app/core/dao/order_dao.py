@@ -19,5 +19,15 @@ class OrderDao(object):
                 filter(Order.client_id == current_user.id).\
                 join(ItemOrder, ItemOrder.order_id == Order.id).\
                 join(Item, Item.id == ItemOrder.item_id).all()
-                
-            return orders
+        else:
+            orders = Order.query.all()
+
+        return orders
+
+    def update_status(self, id, status):
+        updated = dict(
+            status=status
+        )
+        Order.query.filter(Order.id == id).update(updated)
+        db.session.commit()
+        return 'Status atualizado com sucesso!'

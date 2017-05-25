@@ -4,6 +4,7 @@ from app.core.dao.snack_dao import SnackDao
 from app.core.dao.address_dao import AddressDao
 from app.core.dao.order_dao import OrderDao
 from app.core.dao.item_dao import ItemDao
+from app.core.dao.item_order_dao import ItemOrderDao
 from app.core.result.result import Result
 from app.core.strategy.validate_name import ValidateName
 from app.core.strategy.get_class_name import GetClassName
@@ -21,6 +22,7 @@ class Facade(object):
         snack_dao = SnackDao()
         order_dao = OrderDao()
         item_dao = ItemDao()
+        item_order_dao = ItemOrderDao()
 
         # adding each dao in map indexing by class name
         self.__map_daos['User'] = user_dao
@@ -29,6 +31,7 @@ class Facade(object):
         self.__map_daos['Snack'] = snack_dao
         self.__map_daos['Order'] = order_dao
         self.__map_daos['Item'] = item_dao
+        self.__map_daos['ItemOrder'] = item_order_dao
 
         # creating instances of busisness rules to be used
         validate_name = ValidateName()
@@ -69,6 +72,12 @@ class Facade(object):
         rules_update_item = []
         rules_delete_item = []
 
+        # list of rules to validate crud of item_order
+        rules_save_item_order = []
+        rules_search_item_order = []
+        rules_update_item_order = []
+        rules_delete_item_order = []
+
         #################################################
 
         # adding rules to array
@@ -81,6 +90,7 @@ class Facade(object):
         map_rules_snack = {}
         map_rules_order = {}
         map_rules_item = {}
+        map_rules_item_order = {}
 
         # adding rules to maps
         map_rules_user['SAVE'] = rules_save_user
@@ -113,16 +123,23 @@ class Facade(object):
         map_rules_item['UPDATE'] = rules_update_item
         map_rules_item['DELETE'] = rules_delete_item
 
+        map_rules_item_order['SAVE'] = rules_save_item_order
+        map_rules_item_order['SEARCH'] = rules_search_item_order
+        map_rules_item_order['UPDATE'] = rules_update_item_order
+        map_rules_item_order['DELETE'] = rules_delete_item_order
+
         self.__map_business_rules['User'] = map_rules_user
         self.__map_business_rules['Beer'] = map_rules_beer
         self.__map_business_rules['Address'] = map_rules_address
         self.__map_business_rules['Snack'] = map_rules_snack
         self.__map_business_rules['Order'] = map_rules_order
         self.__map_business_rules['Item'] = map_rules_item
+        self.__map_business_rules['ItemOrder'] = map_rules_item_order
 
     def save(self, domain):
         r = Result()
         class_name = GetClassName.name(domain)
+        # import ipdb; ipdb.set_trace()
         errors = self.execute_rules(domain, 'SAVE')
         if len(errors) == 0:
             dao = self.__map_daos[class_name]
@@ -151,6 +168,18 @@ class Facade(object):
         if len(errors) == 0:
             dao = self.__map_daos[class_name]
             r.result = dao.update(domain)
+        else:
+            r.result = errors
+
+        return r
+
+    def update_stock(self, domain):
+        r = Result()
+        class_name = GetClassName.name(domain)
+        errors = self.execute_rules(domain, 'UPDATE')
+        if len(errors) == 0:
+            dao = self.__map_daos[class_name]
+            r.result = dao.update_stock(domain)
         else:
             r.result = errors
 

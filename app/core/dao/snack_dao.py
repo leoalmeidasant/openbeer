@@ -22,6 +22,12 @@ class SnackDao(object):
         db.session.commit()
         return 'Produto alterado com sucesso!'
 
+    def update_stock(self, object):
+        snack = Snack.query.filter(Snack.id == object.id).first()
+        snack.quantity = snack.quantity - int(object.quantity)
+        snack.updated_at = datetime.datetime.today()
+        db.session.commit()
+
     def delete(self, snack_id):
         snack = Snack.query.filter(Snack.id == snack_id).first()
         db.session.delete(snack)

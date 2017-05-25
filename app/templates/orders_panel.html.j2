@@ -1,0 +1,69 @@
+{% extends "_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+<table class="ui center aligned table">
+  <thead>
+    <th>ID#Compra</th>
+    <th>Data</th>
+    <th>Valor</th>
+    <th>Status</th>
+    <th>ID#Cliente</th>
+    <th>Forma de Pagamento</th>
+    <th>Atualizar</th>
+  </thead>
+  <tbody>
+    {% for item in orders %}
+    <tr>
+      <td><a href="/admin_buy_details/{{item.id}}">{{ item.id }}</a></td>
+      <td>{{ item.order_date.date().strftime('%d/%m/%y')}}</td>
+      <td>R${{ item.total_value }}0</td>
+      <td>{{ item.status}}</td>
+      <td>{{ item.client_id }}</td>
+      <td>{{ item.payment_form }}</td>
+      <td><button type="button" name="button" class="ui button blue btn-modal" onclick="btn_click({{item.id}})">Atualizar Status</button></td>
+    </tr>
+    <div class="ui modal content-modal" id="{{item.id}}">
+      <i class="close icon"></i>
+      <div class="header">
+        Atualização de status do pedido {{item.id}}
+      </div>
+      <div class="image content">
+        <div class="ui medium image">
+
+        </div>
+        <div class="description">
+          Status atual: {{item.status}} <br>
+          <form class="" action="{{url_for('att_order_status')}}" method="post">
+            <input type="text" name="id" value="{{ item.id }}" hidden="true">
+            <select class="" name="status">
+              <option value="Aguardando aprovação de pagamento">Aguardando aprovação de pagamento</option>
+              <option value="Encaminhado para entrega">Encaminhado para entrega</option>
+              <option value="Enviado">Enviado</option>
+              <option value="Entregue">Entregue</option>
+            </select>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="ui black deny button">
+          Cancelar
+        </div>
+        <button class="ui positive right labeled icon button" type="submit">
+          Confirmar
+          <i class="checkmark icon"></i>
+        </button>
+      </form>
+      </div>
+    </div>
+
+    {% endfor %}
+  </tbody>
+</table>
+<script type="text/javascript">
+  function btn_click(id) {
+    $('#'+id).modal('show');
+  }
+</script>
+{% endblock %}
