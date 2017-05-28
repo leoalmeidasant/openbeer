@@ -21,4 +21,4 @@ login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 
-from app.routes import routes, beers, users, snacks, cart, dashboard
+from app.routes import routes, beers, users, snacks, cart, dashboard, order

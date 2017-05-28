@@ -24,6 +24,11 @@ class OrderDao(object):
 
         return orders
 
+    def update(self, order):
+        Order.query.filter(Order.id == order.id).update(order)
+        db.session.commit()
+        return 'Extorno efetuado'
+
     def update_status(self, id, status):
         updated = dict(
             status=status

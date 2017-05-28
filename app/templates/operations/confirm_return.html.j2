@@ -1,0 +1,56 @@
+{% extends "_user_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+<br>
+<div class="ui center aligned grid">
+  <div class="ui compact segment">
+    <div class="ui error message">
+      O pedido de devolução será avaliado mediante critérios do administrador. <br>
+      Após a aprovação, aguardar o reembolso dos valores pagos nos respectivos produtos.
+    </div>
+    <form class="ui form" action="{{url_for('confirm_return')}}" method="post">
+      <input type="text" name="itens" hidden value="{{itens}}">
+      <input type="text" name="order_id" hidden value="{{order_id}}">
+      <div class="grouped fields">
+        <label for="option">Selecione o motivo da devolução:</label>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input type="radio" name="option" tabindex="0" class="hidden" value="Produto estragado">
+            <label>Produto estragado</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input type="radio" name="option" tabindex="0" class="hidden" value="Cerveja quente">
+            <label>Cerveja quente</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input type="radio" name="option" tabindex="0" class="hidden" value="Qualidade ruim">
+            <label>Qualidade ruim</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Outro</label>
+          <textarea rows="2" name="option-text" id="option-text"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="fluid ui teal button" name="button">Confirmar devolução</button> <br>
+      <a class="fluid ui button" name="button">Cancelar</a>
+    </form>
+  </div>
+  </div>
+</div>
+<br>
+
+
+
+<script type="text/javascript">
+  $('.ui.radio.checkbox').checkbox();
+</script>
+
+{% endblock %}

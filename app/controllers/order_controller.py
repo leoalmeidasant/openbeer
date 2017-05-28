@@ -31,9 +31,22 @@ class OrderController(object):
         items = ItemOrder.query.filter(ItemOrder.order_id == id).all()
         return items
 
+    def get_order_status(id):
+        status = db.session.query(Order.status).filter(Order.id == id).first()
+        return status
+
     def update_status(id, status):
         order_dao = OrderDao()
         result = order_dao.update_status(id, status)
+        return result
+
+    def update(order):
+        item = Order.query.filter(Order.id == order['id']).first()
+        updated_order = Order(
+            id=order['id'],
+            total_value=item.total_value - order['value'],
+        )
+        result = UpdateCommand.execute(updated_order)
         return result
 
     @staticmethod

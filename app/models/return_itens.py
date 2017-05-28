@@ -1,11 +1,12 @@
 from app import db
 
-class ItemOrder(db.Model):
-    __tablename__ = "item_orders"
+class ReturnItens(db.Model):
+    __tablename__ = "return_itens"
     id = db.Column(db.Integer, primary_key=True)
+    reason = db.Column(db.String)
+    status = db.Column(db.String)
     item_id = db.Column(db.Integer, db.ForeignKey('items.id'), index=True)
+    item = db.relationship('Item')
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), index=True)
-    item = db.relationship('Item', backref='person')
-    returned = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)

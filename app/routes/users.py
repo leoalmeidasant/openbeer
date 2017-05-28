@@ -79,7 +79,8 @@ def buys():
 @login_required
 def buy_details(id):
     items = OrderController.get_order_items(id)
-    return render_template('users/details.html.j2', items=items)
+    status = OrderController.get_order_status(id)
+    return render_template('users/details.html.j2', items=items, status=status[0])
 
 @app.route('/admin_buy_details/<id>')
 @login_required
