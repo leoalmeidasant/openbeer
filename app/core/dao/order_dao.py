@@ -25,9 +25,12 @@ class OrderDao(object):
         return orders
 
     def update(self, order):
-        Order.query.filter(Order.id == order.id).update(order)
+        update_value = dict(
+            total_value=order.total_value
+        )
+        Order.query.filter(Order.id == order.id).update(update_value)
         db.session.commit()
-        return 'Extorno efetuado'
+        print('Valor da compra atualizado')
 
     def update_status(self, id, status):
         updated = dict(

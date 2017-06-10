@@ -7,5 +7,6 @@ class ItemOrder(db.Model):
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), index=True)
     item = db.relationship('Item', backref='person')
     returned = db.Column(db.Boolean, default=False)
+    confirm_return = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)

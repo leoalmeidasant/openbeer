@@ -8,5 +8,6 @@ class ReturnItens(db.Model):
     item_id = db.Column(db.Integer, db.ForeignKey('items.id'), index=True)
     item = db.relationship('Item')
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), index=True)
+    order = db.relationship('Order')
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)

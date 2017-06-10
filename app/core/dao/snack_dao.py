@@ -27,6 +27,7 @@ class SnackDao(object):
         snack.quantity = snack.quantity - int(object.quantity)
         snack.updated_at = datetime.datetime.today()
         db.session.commit()
+        print('Estoque atualizado')
 
     def delete(self, snack_id):
         snack = Snack.query.filter(Snack.id == snack_id).first()

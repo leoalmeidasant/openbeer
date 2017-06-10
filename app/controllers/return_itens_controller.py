@@ -17,3 +17,10 @@ class ReturnItensController(object):
         db.session.commit()
         result = SaveCommand.execute(return_item)
         return result
+
+    @staticmethod
+    def confirmed_returned(item_id):
+        ItemOrder.query.filter(
+            ItemOrder.item_id == item_id
+        ).update(dict(confirm_return=True))
+        db.session.commit()

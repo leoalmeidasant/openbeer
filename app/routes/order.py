@@ -47,10 +47,16 @@ def returns():
         #atualizar pedido com menos um 1 do item e diminuir o valor
         #fazer extorno pra conta do cliente
         order = dict(
+            return_id=int(request.form.get('return_id')),
             id=int(request.form.get('order_id')),
             value=float(request.form.get('value')),
             quantity=request.form.get('quantity'),
             item_id=request.form.get('item_id')
         )
-        result = OrderController.update(order)
+        client_id = request.form.get('client_id')
+
+        result = OrderController.update(order, client_id)
+
+        ReturnItensController.confirmed_returned(order['item_id'])
+        flash('Devolução de produto confirmada!')
         return redirect(request.referrer)

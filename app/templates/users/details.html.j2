@@ -18,9 +18,15 @@
   {% for item in items %}
     <tbody>
       {% if item.returned == True %}
-        <tr class="ui error message">
-            <input type="text" hidden name="order_id" value="{{item.order_id}}">
-            <td>Devolução Já solicitada</td>
+            {% if item.confirm_return %}
+              <tr class="ui success message">
+                <input type="text" hidden name="order_id" value="{{item.order_id}}">
+                <td>Produto já devolvido</td>
+            {% else %}
+              <tr class="ui error message">
+                <input type="text" hidden name="order_id" value="{{item.order_id}}">
+                <td>Devolução Já solicitada</td>
+            {% endif %}
           {% if item.item.beer_id %}
             <td><img src="../../static/images/{{item.item.beer.image}}" style="width: 50px;"></td>
             <td>{{item.item.beer.name}}</td>

@@ -29,6 +29,7 @@ class BeerDao(object):
         beer.quantity = beer.quantity - int(object.quantity)
         beer.updated_at = datetime.datetime.today()
         db.session.commit()
+        print('Estoque atualizado')
 
     def delete(self, beer_id):
         beer = Beer.query.filter(Beer.id == beer_id).first()
