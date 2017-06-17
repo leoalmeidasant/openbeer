@@ -112,19 +112,38 @@
                 </div>
                 <div class="six wide field">
                   <label for="">Nome do titular</label>
-                  <input type="text" name="name" value="">
+                  <input type="text" name="name" value="" placeholder="Ex: ZÉ DA PADARIA">
                 </div>
                 <div class="four wide field">
                   <label for="">Número</label>
-                  <input type="number" name="card_number" value="" min="0" step="1">
+                  <input type="number" name="card_number" value="" min="0" step="1" placeholder="Ex: #### #### #### ####">
                 </div>
                 <div class="three wide field">
                   <label for="">Data de expiração</label>
-                  <input type="date" name="expiration" value="" class="expiration">
+                  <input type="text" name="expiration" value="" class="expiration" placeholder="Ex: MM/AA">
                 </div>
                 <div class="two wide field">
-                  <label for="">Cod. Segurança</label>
+                  <label for="">Cod.</label>
                   <input type="text" name="code" value="">
+                </div>
+                <div class="field">
+                  <label for="">Parcelas</label>
+                  <div class="ui selection dropdown">
+                    <input type="hidden" name="parts[type]">
+                    <div class="default text">Parcelas</div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                      <div class="item" data-value="1">
+                        1x - Sem juros
+                      </div>
+                      <div class="item" data-value="2">
+                        2x - Sem juros
+                      </div>
+                      <div class="item" data-value="3">
+                        3x - Sem juros
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -132,7 +151,14 @@
       </div>
       <br>
     </div>
-    <button type="submit" class="ui teal button block">Efetuar pagamento</button>
+    {% if not addresses %}
+      <div class="ui alert message">
+        Selecione um endereço
+      </div>
+      <button type="submit" class="ui teal button block" disabled>Finalizar compra</button>
+    {% else %}
+      <button type="submit" class="ui teal button block">Finalizar compra</button>
+    {% endif %}
     <a href="/" class="ui red button block">Voltar</a>
   </form>
   {% else %}

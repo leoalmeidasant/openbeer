@@ -12,7 +12,7 @@
     <div class="ui center aligned attached segment">
       <div class="ui list">
         <div class="item"><label for=""><b>Sub-total:</b></label> R${{ session['cart']['total'] }}0</div>
-        <div class="item"><label for=""><b>Frete:</b></label> R$5.00</div>
+        <div class="item"><label for=""><b>Frete:</b></label> R${{ session['fare'] }}0</div>
         <div class="item"><label for=""><b>Total:</b></label> R${{ session['cart']['total'] + 5 }}0</div>
       </div>
     </div>
@@ -69,5 +69,5 @@
   </div>
 </div>
 <a href="/finalizing" class="ui teal button">Confirmar</a>
-<a href="#" class="ui red button">Cancelar</a>
+<a href="/cart" class="ui red button">Cancelar</a>
 {% endblock body %}

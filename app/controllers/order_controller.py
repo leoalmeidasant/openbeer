@@ -84,10 +84,10 @@ class OrderController(object):
     @staticmethod
     def finalizing_shop():
         order = Order(
-            fare=5,
+            fare=session['fare'],
             order_date=datetime.today(),
             payment_form=session['payment_form'],
-            total_value=session['cart']['total'] + 5,
+            total_value=session['cart']['total'] + session['fare'],
             status='Aguardando aprovação de pagamento',
             client_id=current_user.id,
             delivery_address_id=session['selected_address'],

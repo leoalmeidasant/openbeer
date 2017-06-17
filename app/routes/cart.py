@@ -6,6 +6,7 @@ from app.models.address import Address
 from app.controllers.cart_controller import CartController
 from app.controllers.order_controller import OrderController
 from app.controllers.user_controller import UserController
+from app.core.strategy.calculate_fare import CalculateFare
 from flask import redirect, render_template, url_for, request, flash, session
 
 @app.route('/add_beer_cart', methods=['POST'])
@@ -61,6 +62,7 @@ def resume():
     }
 
     session['address'] = address
+    session['fare'] = CalculateFare.calculate(address['city'])
 
     if request.form.get('payment_form') == 'card':
         card = {
@@ -72,6 +74,7 @@ def resume():
         }
         session['card'] = card
         session['payment_form'] = 'Cartão'
+        session['parts'] = request.form.get('parts[type]')
     else:
         session['payment_form'] = 'Dinheiro'
         session['parts'] = 'Á vista'
