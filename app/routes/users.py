@@ -23,6 +23,7 @@ def new_user():
             'password': request.form['password'],
             'confirm_password': request.form['confirm_password'],
             'phone': request.form['phone'],
+            'gender': request.form['gender'],
             'address': {
                 'street': request.form['street'],
                 'number': request.form['number'],

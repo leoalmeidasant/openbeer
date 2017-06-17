@@ -15,12 +15,13 @@ def confirm_return():
         reason = request.form.get('option')
     else:
         reason = request.form.get('option-text')
-
     for item in itens:
         obj = ReturnItens(
             item_id=int(item),
             order_id=order_id,
             reason=reason,
+            item_quantity=int(request.form.get('item_quantity')),
+            item_value=float(request.form.get('item_value')),
             status='Aguardando aprovação do administrador',
             created_at=datetime.today(),
             updated_at=datetime.today()
@@ -35,7 +36,18 @@ def confirm_return():
 def select_items_return():
     itens_list = ','.join(request.form.getlist('selected_itens'))
     order_id = request.form.get('order_id')
-    return render_template('operations/confirm_return.html.j2', itens=itens_list, order_id=order_id)
+    item_quantity = int(request.form.get('quantity'))
+    item_value = float(request.form.get('item_value'))
+    if request.form.get('botao') == 'return':
+        return render_template('operations/confirm_return.html.j2',
+                itens=itens_list,
+                order_id=order_id,
+                item_quantity=item_quantity,
+                item_value=item_value * item_quantity
+            )
+    else:
+        if not 'beer' in session['cart'] or not 'snack' in session['cart']:
+            return 'Por favor, insira itens no carrinho para que possamos efetuar a troca!'
 
 @app.route('/admin/returns', methods=['POST', 'GET'])
 @login_required
@@ -44,8 +56,6 @@ def returns():
         returns = ReturnItens.query.all()
         return render_template('operations/returns.html.j2', returns=returns)
     else:
-        #atualizar pedido com menos um 1 do item e diminuir o valor
-        #fazer extorno pra conta do cliente
         order = dict(
             return_id=int(request.form.get('return_id')),
             id=int(request.form.get('order_id')),

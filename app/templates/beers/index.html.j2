@@ -13,7 +13,6 @@
       <th>Nome</th>
       <th>Tipo</th>
       <th>Marca</th>
-      <th>Preço(Unitário)</th>
       <th>Preço(Pack com 6)</th>
       <th>Editar</th>
       <th>Excluir</th>
@@ -30,7 +29,6 @@
         <td>{{ beer.type }}</td>
         <td>{{ beer.mark }}</td>
         <td>{{ beer.value }}</td>
-        <td>{{ beer.value * 6 }}</td>
         <td><a href="{{url_for('edit_beer', id=beer.id)}}" class="ui button">Editar</a></td>
         <td><a href="{{url_for('delete_beer', id=beer.id)}}" class="ui red button">Remover</a></td>
       </tr>

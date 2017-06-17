@@ -1,4 +1,5 @@
 from app import db
+from sqlalchemy import desc
 from flask import session
 from datetime import datetime
 from flask_login import current_user
@@ -26,7 +27,7 @@ class OrderController(object):
         return SearchCommand.execute(order)
 
     def get_all():
-        orders = Order.query.all()
+        orders = Order.query.order_by(desc(Order.id)).all()
         return orders
 
     def get_order_items(id):
@@ -64,6 +65,13 @@ class OrderController(object):
                 quantity=item.quantity + int(order['quantity'])
             )
             UpdateStockCommand.execute(snack)
+
+        updated = dict(
+            quantity=item.quantity - int(order['quantity']),
+            value=item.value - int(order['value'])
+        )
+        Item.query.filter(Item.id == order['item_id']).update(updated)
+        db.session.commit()
 
         reversal = Reversal(
             client_id=client_id,

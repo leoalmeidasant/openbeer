@@ -12,6 +12,7 @@ class User(db.Model):
     confirm_password = db.Column(db.String)
     phone = db.Column(db.String)
     role = db.Column(db.String)
+    gender = db.Column(db.String)
     addresses = db.relationship('Address', backref='person', lazy='dynamic',
                                 primaryjoin="User.id == Address.user_id")
     created_at = db.Column(db.DateTime)

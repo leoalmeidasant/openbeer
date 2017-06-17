@@ -19,6 +19,7 @@ class UserController(object):
             confirm_password=kwargs['confirm_password'],
             phone=kwargs['phone'],
             role='user',
+            gender=kwargs['gender'],
             created_at=datetime.datetime.now(),
             updated_at=datetime.datetime.now()
         )

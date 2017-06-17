@@ -9,5 +9,7 @@ class ReturnItens(db.Model):
     item = db.relationship('Item')
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), index=True)
     order = db.relationship('Order')
+    item_quantity = db.Column(db.Integer)
+    item_value = db.Column(db.Float)
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)

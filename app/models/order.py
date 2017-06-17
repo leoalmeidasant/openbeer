@@ -11,6 +11,7 @@ class Order(db.Model):
     status = db.Column(db.String)
     delivery_address_id = db.Column(db.Integer, db.ForeignKey('address.id'), index=True)
     client_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
+    client = db.relationship('User')
     items = db.relationship('ItemOrder', backref='person', lazy='dynamic')
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)
