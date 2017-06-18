@@ -6,6 +6,8 @@ from app.core.dao.order_dao import OrderDao
 from app.core.dao.item_dao import ItemDao
 from app.core.dao.item_order_dao import ItemOrderDao
 from app.core.dao.return_item_dao import ReturnItensDao
+from app.core.dao.exchanges_dao import ExchangesDao
+from app.core.dao.item_exchange_dao import ItemExchangeDao
 from app.core.result.result import Result
 from app.core.strategy.validate_name import ValidateName
 from app.core.strategy.get_class_name import GetClassName
@@ -24,7 +26,9 @@ class Facade(object):
         order_dao = OrderDao()
         item_dao = ItemDao()
         item_order_dao = ItemOrderDao()
-        return_itens_dao = ReturnItensDao
+        return_itens_dao = ReturnItensDao()
+        exchange_dao = ExchangesDao()
+        item_exchange_dao = ItemExchangeDao()
 
         # adding each dao in map indexing by class name
         self.__map_daos['User'] = user_dao
@@ -35,6 +39,8 @@ class Facade(object):
         self.__map_daos['Item'] = item_dao
         self.__map_daos['ItemOrder'] = item_order_dao
         self.__map_daos['ReturnItens'] = return_itens_dao
+        self.__map_daos['Exchanges'] = exchange_dao
+        self.__map_daos['ItemExchange'] = item_exchange_dao
 
         # creating instances of busisness rules to be used
         validate_name = ValidateName()
@@ -84,6 +90,12 @@ class Facade(object):
         # list of rules to validade crud of return_itens
         rules_save_return_itens = []
 
+        # list of rules to validade crud of exchanges
+        rules_save_exchange = []
+
+        # list of rules to validade crud of item_exchanges
+        rules_save_item_exchange = []
+
         #################################################
 
         # adding rules to array
@@ -98,6 +110,8 @@ class Facade(object):
         map_rules_item = {}
         map_rules_item_order = {}
         map_rules_return_itens = {}
+        map_rules_exchanges = {}
+        map_rules_item_exchange = {}
 
         # adding rules to maps
         map_rules_user['SAVE'] = rules_save_user
@@ -137,6 +151,10 @@ class Facade(object):
 
         map_rules_return_itens['SAVE'] = rules_save_return_itens
 
+        map_rules_exchanges['SAVE'] = rules_save_exchange
+
+        map_rules_item_exchange['SAVE'] = rules_save_item_exchange
+
         self.__map_business_rules['User'] = map_rules_user
         self.__map_business_rules['Beer'] = map_rules_beer
         self.__map_business_rules['Address'] = map_rules_address
@@ -145,6 +163,8 @@ class Facade(object):
         self.__map_business_rules['Item'] = map_rules_item
         self.__map_business_rules['ItemOrder'] = map_rules_item_order
         self.__map_business_rules['ReturnItens'] = map_rules_return_itens
+        self.__map_business_rules['Exchanges'] = map_rules_exchanges
+        self.__map_business_rules['ItemExchange'] = map_rules_item_exchange
 
     def save(self, domain):
         r = Result()

@@ -1,3 +1,4 @@
+import json
 from app import app
 from datetime import datetime
 from app.models.return_itens import ReturnItens
@@ -46,8 +47,10 @@ def select_items_return():
                 item_value=item_value * item_quantity
             )
     else:
-        if not 'beer' in session['cart'] or not 'snack' in session['cart']:
-            return 'Por favor, insira itens no carrinho para que possamos efetuar a troca!'
+        if not session['cart']['beers'] and not session['cart']['snacks']:
+            return render_template('users/miss_cart.html.j2')
+        else:
+            return json.dumps(session['cart'])
 
 @app.route('/admin/returns', methods=['POST', 'GET'])
 @login_required
