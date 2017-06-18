@@ -34,12 +34,14 @@
             {% endif %}
           {% if item.item.beer_id %}
             <td><img src="../../static/images/{{item.item.beer.image}}" style="width: 50px;"></td>
+            <input type="text" name="image" value="{{item.item.beer.image}}" hidden>
             <td>{{item.item.beer.name}}</td>
             <td>{{item.item.beer.description}}</td>
             <td>R${{item.item.beer.value}}0</td>
             <input type="text" name="item_value" value="{{item.item.beer.value}}" hidden="">
           {% else %}
             <td><img src="../../static/images/{{item.item.snack.image}}" style="width: 50px;"></td>
+            <input type="text" name="image" value="{{item.item.snack.image}}" hidden>
             <td>{{item.item.snack.name}}</td>
             <td>{{item.item.snack.description}}</td>
             <td>R${{item.item.snack.value}}0</td>
@@ -68,12 +70,14 @@
             {% endif %}
           {% if item.item.beer_id %}
             <td><img src="../../static/images/{{item.item.beer.image}}" style="width: 50px;"></td>
+            <input type="text" name="image" value="{{item.item.beer.image}}" hidden>
             <td>{{item.item.beer.name}}</td>
             <td>{{item.item.beer.description}}</td>
             <td>R${{item.item.beer.value}}0</td>
             <input type="text" name="item_value" value="{{item.item.beer.value}}" hidden="">
           {% else %}
             <td><img src="../../static/images/{{item.item.snack.image}}" style="width: 50px;"></td>
+            <input type="text" name="image" value="{{item.item.snack.image}}" hidden>
             <td>{{item.item.snack.name}}</td>
             <td>{{item.item.snack.description}}</td>
             <td>R${{item.item.snack.value}}0</td>
@@ -107,9 +111,11 @@
 
   $(".checkbox").click(function() {
     if (this.checked == true) {
-       $(".option_button").removeAttr("disabled");
+      $(".option_button").removeAttr("disabled");
+      $(".checkbox").not(this).attr("disabled", 'disabled')
     } else {
-       $(".option_button").attr("disabled", "disabled");
+      $('.checkbox').removeAttr("disabled");
+      $(".option_button").attr("disabled", "disabled");
     }
 });
 

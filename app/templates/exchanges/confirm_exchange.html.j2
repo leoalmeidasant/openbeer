@@ -1,0 +1,89 @@
+{% extends "_user_base.html.j2" %}
+
+{% block body %}
+
+  <div class="ui info floating message">
+    Você deseja trocar os seguintes produtos?
+  </div>
+
+<form action="{{url_for('confirm_exchange_request')}}" method="post">
+  <div class="ui items">
+    {% if session['cart']['beers'] or session['cart']['snacks'] %}
+    <div class="ui header">
+      Trocar:
+    </div>
+    {% for item in itens %}
+    <div class="item">
+      <div class="image">
+        <img src="/static/images/{{image}}" style="width: 80px;">
+      </div>
+      <div class="content">
+        <a class="header">{{item.beer.mark}}</a>
+        <div class="meta">
+          <span>{{item.beer.name}}</span>
+        </div>
+        <div class="description">
+          <p><strong>Valor: </strong>R${{item.beer.value}}0</p>
+          <p><strong>Quantidade: </strong>{{item_quantity}}</p>
+          <p><strong>Valor total: </strong>R${{item_value}}0</p>
+        </div>
+      </div>
+    </div>
+    <input type="text" name="item_id" value="{{item.id}}" hidden>
+    <input type="text" name="total_value" value="{{item_value}}" hidden>
+    <input type="text" name="quantity" value="{{item_quantity}}" hidden>
+    {% endfor %}
+    <div class="ui header">
+      Total dos itens a trocar: R${{item_value}}0
+    </div>
+    <div class="ui divider"></div>
+    <div class="ui header">
+      Por:
+    </div>
+    {% for item in session['cart']['beers'] %}
+    <div class="item">
+      <div class="image">
+        <img src="/static/images/{{item.image}}" style="width: 80px;">
+      </div>
+      <div class="content">
+        <a class="header">{{item.name}}</a>
+        <div class="meta">
+          <span>{{item.name}}</span>
+        </div>
+        <div class="description">
+          <p><strong>Valor: </strong>R${{item.value}}0</p>
+          <p><strong>Quantidade: </strong>{{item.quantity}}</p>
+          <p><strong>Valor total: </strong>R${{item.total_value}}0</p>
+        </div>
+      </div>
+    </div>
+    <div class="ui divider"></div>
+    {% endfor %}
+    {% for item in session['cart']['snacks'] %}
+    <div class="item">
+      <div class="image">
+        <img src="/static/images/{{item.image}}" style="width: 80px;">
+      </div>
+      <div class="content">
+        <a class="header">{{item.name}}</a>
+        <div class="meta">
+          <span>{{item.name}}</span>
+        </div>
+        <div class="description">
+          <p><strong>Valor: </strong>R${{item.value}}0</p>
+          <p><strong>Quantidade: </strong>{{item.quantity}}</p>
+          <p><strong>Valor total: </strong>R${{item.total_value}}0</p>
+        </div>
+      </div>
+    </div>
+    <div class="ui divider"></div>
+    {% endfor %}
+    {% endif %}
+  </div>
+  <div class="ui header">
+    Total da nova compra: R${{session['cart']['total']}}0
+  </div>
+  <button type="submit" name="button" class="ui teal button">Confirma pedido de troca</button>
+  <a href="/buys" class="ui blue button">Voltar</a>
+</form>
+{% endblock %}

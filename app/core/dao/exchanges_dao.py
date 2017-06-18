@@ -5,4 +5,4 @@ class ExchangesDao(object):
 
     def save(self, exchange):
         db.session.add(exchange)
-        db.session.commit()
+        db.session.flush()

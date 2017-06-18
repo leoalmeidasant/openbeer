@@ -2,6 +2,7 @@ import json
 from app import app
 from datetime import datetime
 from app.models.return_itens import ReturnItens
+from app.models.item import Item
 from app.controllers.return_itens_controller import ReturnItensController
 from app.controllers.order_controller import OrderController
 from flask import redirect, render_template, url_for, Flask, request, flash, session
@@ -39,6 +40,7 @@ def select_items_return():
     order_id = request.form.get('order_id')
     item_quantity = int(request.form.get('quantity'))
     item_value = float(request.form.get('item_value'))
+    image = request.form.get('image')
     if request.form.get('botao') == 'return':
         return render_template('operations/confirm_return.html.j2',
                 itens=itens_list,
@@ -50,7 +52,18 @@ def select_items_return():
         if not session['cart']['beers'] and not session['cart']['snacks']:
             return render_template('users/miss_cart.html.j2')
         else:
-            return json.dumps(session['cart'])
+            itens = []
+            for i in request.form.getlist('selected_itens'):
+                itens.append(
+                    Item.query.filter(Item.id == int(i)).first()
+                )
+            return render_template('exchanges/confirm_exchange.html.j2',
+                itens=itens,
+                order_id=order_id,
+                item_quantity=item_quantity,
+                item_value=item_value * item_quantity,
+                image=image
+            )
 
 @app.route('/admin/returns', methods=['POST', 'GET'])
 @login_required

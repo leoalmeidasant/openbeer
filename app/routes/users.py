@@ -3,6 +3,7 @@ from app import app, login_manager
 from app.controllers.user_controller import UserController
 from app.controllers.order_controller import OrderController
 from app.models.login_form import LoginForm
+from app.models.exchanges import Exchanges
 from app.core.dao.user_dao import UserDao
 from flask_login import login_user, logout_user, login_required, current_user
 
@@ -98,3 +99,9 @@ def att_order_status():
     result = OrderController.update_status(id, status)
     flash(result)
     return redirect(url_for('admin_orders'))
+
+@app.route('/trades', methods=['GET', 'POST'])
+@login_required
+def trades():
+    trades = Exchanges.query.filter(Exchanges.client_id == current_user.id).all()
+    return render_template('users/exchanges.html.j2', trades=trades)
