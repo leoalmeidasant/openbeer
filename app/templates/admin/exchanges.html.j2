@@ -1,0 +1,43 @@
+{% extends "_base.html.j2" %}
+
+{% block body %}
+  <table class="ui center aligned table">
+    <thead>
+      <th>#ID da Troca</th>
+      <th>Data</th>
+      <th>Diferença no valor</th>
+      <th>Status</th>
+      <th>Situação</th>
+      <th></th>
+    </thead>
+    <tbody>
+      {% for trade in trades %}
+        <tr>
+          <td><a href="#">{{trade.id}}</a></td>
+          <td>{{trade.created_at.date().strftime('%d/%m/%y')}}</td>
+          {% if trade.total_value < 0 %}
+            <td>Necessário pagamento de R${{trade.total_value}}0</td>
+          {% else %}
+            <td>R${{trade.total_value}}0</td>
+          {% endif %}
+          <td>{{trade.status}}</td>
+          {% if trade.total_value > 0 %}
+            <td>Valor ressarcido</td>
+          {% elif trade.total_value == 0 %}
+            <td>Nenhuma operação a ser realizada</td>
+          {% else %}
+            <td></td>
+          {% endif %}
+          <form class="" action="{{url_for('approve_trade')}}" method="post">
+            <input type="text" name="trade_id" value="{{trade.id}}" hidden>
+            {% if trade.status == 'Troca aprovada' %}
+              <td><button type="submit" class="ui teal button" name="button" disabled>Aprovado</button></td>
+            {% else %}
+              <td><button type="submit" class="ui teal button" name="button">Aprovar</button></td>
+            {% endif %}
+          </form>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

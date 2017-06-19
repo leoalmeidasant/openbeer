@@ -1,0 +1,37 @@
+{% extends "_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+<table class="ui table">
+  <thead>
+    <th>Imagem</th>
+    <th>Nome</th>
+    <th>Descrição</th>
+    <th>Preço</th>
+    <th>Quantidade</th>
+    <th>Valor Total</th>
+  </thead>
+  {% for item in items %}
+    <tbody>
+      <tr>
+        {% if item.item.beer_id %}
+        <td><img src="../../static/images/{{item.item.beer.image}}" style="width: 50px;"></td>
+        <td>{{item.item.beer.name}}</td>
+        <td>{{item.item.beer.description}}</td>
+        <td>R${{item.item.beer.value}}0</td>
+        {% else %}
+        <td><img src="../../static/images/{{item.item.snack.image}}" style="width: 50px;"></td>
+        <td>{{item.item.snack.name}}</td>
+        <td>{{item.item.snack.description}}</td>
+        <td>R${{item.item.snack.value}}0</td>
+        {% endif %}
+        <td>{{item.item.quantity}}</td>
+        <td>R${{item.item.value}}0</td>
+      </tr>
+    </tbody>
+  {% endfor %}
+</table>
+<a href="/admin/orders" class="ui button teal">Voltar</a>
+{% endblock body %}

@@ -1,0 +1,124 @@
+{% extends "_user_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+<table class="ui center aligned table">
+  <thead>
+    <th></th>
+    <th>Imagem</th>
+    <th>Nome</th>
+    <th>Descrição</th>
+    <th>Preço</th>
+    <th>Quantidade</th>
+    <th>Valor Total</th>
+  </thead>
+<form class="" action="{{url_for('select_items_return')}}" method="post">
+  <h4>Status: {{status}}</h4>
+  {% for item in items %}
+    <tbody>
+      {% if item.returned == True %}
+            {% if item.confirm_return %}
+              <tr class="ui success message">
+                <input type="text" hidden name="order_id" value="{{item.order_id}}">
+                {% if item.item.quantity > 0 %}
+                  <td><input type="checkbox" name="selected_itens" class="checkbox" value="{{item.item.id}}"> Produto já devolvido</td>
+                {% else %}
+                  <td>Produto já devolvido</td>
+                {% endif %}
+            {% else %}
+              <tr class="ui error message">
+                <input type="text" hidden name="order_id" value="{{item.order_id}}">
+                <td>Devolução Já solicitada</td>
+            {% endif %}
+          {% if item.item.beer_id %}
+            <td><img src="../../static/images/{{item.item.beer.image}}" style="width: 50px;"></td>
+            <input type="text" name="image" value="{{item.item.beer.image}}" hidden>
+            <td>{{item.item.beer.name}}</td>
+            <td>{{item.item.beer.description}}</td>
+            <td>R${{item.item.beer.value}}0</td>
+            <input type="text" name="item_value" value="{{item.item.beer.value}}" hidden="">
+          {% else %}
+            <td><img src="../../static/images/{{item.item.snack.image}}" style="width: 50px;"></td>
+            <input type="text" name="image" value="{{item.item.snack.image}}" hidden>
+            <td>{{item.item.snack.name}}</td>
+            <td>{{item.item.snack.description}}</td>
+            <td>R${{item.item.snack.value}}0</td>
+            <input type="text" name="item_value" value="{{item.item.snack.value}}" hidden>
+          {% endif %}
+          {% if item.item.quantity > 0 %}
+            <td>
+              <select class="" name="quantity">
+                {% for i in range(0, item.item.quantity) %}
+                  <option value="{{i + 1}}">{{i + 1}}</option>
+                {% endfor %}
+              </select>
+            </td>
+          {% else %}
+            <td>{{item.item.quantity}}</td>
+          {% endif %}
+          <td>R${{item.item.value}}0</td>
+        </tr>
+      {% else %}
+        <tr>
+            <input type="text" hidden name="order_id" value="{{item.order_id}}">
+            {% if status == 'Entregue' %}
+                <td><input type="checkbox" name="selected_itens" class="checkbox" value="{{item.item.id}}"></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+          {% if item.item.beer_id %}
+            <td><img src="../../static/images/{{item.item.beer.image}}" style="width: 50px;"></td>
+            <input type="text" name="image" value="{{item.item.beer.image}}" hidden>
+            <td>{{item.item.beer.name}}</td>
+            <td>{{item.item.beer.description}}</td>
+            <td>R${{item.item.beer.value}}0</td>
+            <input type="text" name="item_value" value="{{item.item.beer.value}}" hidden="">
+          {% else %}
+            <td><img src="../../static/images/{{item.item.snack.image}}" style="width: 50px;"></td>
+            <input type="text" name="image" value="{{item.item.snack.image}}" hidden>
+            <td>{{item.item.snack.name}}</td>
+            <td>{{item.item.snack.description}}</td>
+            <td>R${{item.item.snack.value}}0</td>
+            <input type="text" name="item_value" value="{{item.item.snack.value}}" hidden="">
+          {% endif %}
+          {% if status == 'Entregue' %}
+          <td>
+            <select class="" name="quantity">
+              {% for i in range(0, item.item.quantity) %}
+                <option value="{{i + 1}}">{{i + 1}}</option>
+              {% endfor %}
+            </select>
+          </td>
+          {% else %}
+          <td>{{item.item.quantity}}</td>
+          {% endif %}
+          <td>R${{item.item.value}}0</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  {% endfor %}
+</table>
+  <button type="submit" id="return_button" class="ui teal button option_button" name="botao" value="return" disabled>Solicitar Devolução</button>
+  <button type="submit" class="ui blue button option_button" name="botao" value="exchange" disabled>Solicitar Troca</button>
+</form>
+
+<script type="text/javascript">
+  function return_item(id) {
+    $('#devo'+id).modal('show');
+  };
+
+  $(".checkbox").click(function() {
+    if (this.checked == true) {
+      $(".option_button").removeAttr("disabled");
+      $(".checkbox").not(this).attr("disabled", 'disabled')
+    } else {
+      $('.checkbox').removeAttr("disabled");
+      $(".option_button").attr("disabled", "disabled");
+    }
+});
+
+</script>
+
+{% endblock body %}

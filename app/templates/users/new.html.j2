@@ -1,0 +1,79 @@
+{% extends "_user_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+{% if message %}
+<div class="ui message info">
+  <i class="close icon"></i>
+  <div class="header">
+    Mensagem
+  </div>
+  <p>{{message}}</p>
+</div>
+{% endif %}
+<form class="ui form" method="post" enctype="multipart/form-data" action="{{url_for('new_user')}}">
+  <div class="field">
+    <label>Name</label>
+    <div class="two fields">
+      <div class="field">
+        <input type="text" name="name" placeholder="First Name">
+      </div>
+      <div class="field">
+        <input type="text" name="lastname" placeholder="Last Name">
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label for="">Email</label>
+    <input type="text" name="email" value="" placeholder="email@email.com">
+  </div>
+  <div class="fields">
+    <div class="six wide field">
+      <label for="">Senha</label>
+      <input type="password" name="password" value="">
+    </div>
+    <div class="six wide field">
+      <label for="">Confirmação de senha</label>
+      <input type="password" name="confirm_password" value="">
+    </div>
+    <div class="four wide field">
+      <label for="">Telefone</label>
+      <input type="number" name="phone" value="">
+    </div>
+    <div class="four wide field">
+      <label for="">Sexo</label>
+      <select class="" name="gender">
+        <option value="Feminino">Feminino</option>
+        <option value="Masculino">Masculino</option>
+      </select>
+    </div>
+  </div>
+  <h4 class="ui dividing header">Endereço</h4>
+  <div class="fields">
+    <div class="six wide field">
+      <label for="">Rua</label>
+      <input type="text" name="street" value="">
+    </div>
+    <div class="two wide field">
+      <label for="">Número</label>
+      <input type="number" name="number" value="">
+    </div>
+    <div class="four wide field">
+      <label for="">Bairro</label>
+      <input type="text" name="district" value="">
+    </div>
+    <div class="four wide field">
+      <label for="">Cidade</label>
+      <input type="text" name="city" value="">
+    </div>
+    <div class="four wide field">
+      <label for="">CEP</label>
+      <input type="text" name="zip_code" value="">
+    </div>
+  </div>
+  <button type="submit" name="button" class="ui blue button">Salvar</button>
+  <a href="/" class="ui red button">Cancelar</a>
+</form>
+{% endblock body %}

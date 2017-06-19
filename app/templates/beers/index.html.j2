@@ -1,0 +1,45 @@
+{% extends "_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+<a href="/beer/new" class="ui right floated blue button">Cadastrar nova cerveja</a>
+<h4 class="ui header">Cervejas</h4>
+<div class="ui container grid">
+  <table class="ui center aligned table">
+    <thead>
+      <th>Imagem</th>
+      <th>Nome</th>
+      <th>Tipo</th>
+      <th>Marca</th>
+      <th>Preço(Pack com 6)</th>
+      <th>Estoque</th>
+      <th></th>
+      <th></th>
+    </thead>
+    {% for beer in beers %}
+    <tbody>
+      <tr>
+        <td>
+          {% if beer.image %}
+          <img src="static/images/{{ beer.image }}" style="width: 50px;">
+          {% endif %}
+        </td>
+        <td>{{ beer.name }}</td>
+        <td>{{ beer.type }}</td>
+        <td>{{ beer.mark }}</td>
+        <td>{{ beer.value }}</td>
+        {% if beer.quantity <= 0 %}
+          <td class="ui error message">SEM ESTOQUE</td>
+        {% else %}
+          <td>{{  beer.quantity }}</td>
+        {% endif %}
+        <td><a href="{{url_for('edit_beer', id=beer.id)}}" class="ui button">Editar</a></td>
+        <td><a href="{{url_for('delete_beer', id=beer.id)}}" class="ui red button">Remover</a></td>
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+{% endblock body %}

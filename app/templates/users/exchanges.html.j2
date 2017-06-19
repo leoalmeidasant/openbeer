@@ -1,0 +1,36 @@
+{% extends "_user_base.html.j2" %}
+
+{% block body %}
+  <table class="ui center aligned table">
+    <thead>
+      <th>#ID da Troca</th>
+      <th>Data</th>
+      <th>Diferença no valor</th>
+      <th>Status</th>
+      <th>Situação</th>
+    </thead>
+    <tbody>
+      {% for trade in trades %}
+        <tr>
+          <td><a href="#">{{trade.id}}</a></td>
+          <td>{{trade.created_at.date().strftime('%d/%m/%y')}}</td>
+          {% if trade.total_value < 0 %}
+            <td>Necessário pagamento de R${{trade.total_value}}0</td>
+          {% else %}
+            <td>R${{trade.total_value}}0</td>
+          {% endif %}
+          <td>{{trade.status}}</td>
+          {% if trade.total_value > 0 %}
+            <td>Valor ressarcido</td>
+          {% elif trade.total_value == 0 %}
+            <td>Nenhuma operação a ser realizada</td>
+          {% elif trade.total_value < 0 and trade.status == 'Troca aprovada' %}
+            <td><button type="button" name="button" class="ui teal button">Efetuar pagamento</button></td>
+          {% else %}
+            <td></td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

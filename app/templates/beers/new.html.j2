@@ -1,0 +1,74 @@
+{% extends "_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+
+{% block body %}
+{% if message %}
+<div class="ui message info">
+  <i class="close icon"></i>
+  <div class="header">
+    Mensagem
+  </div>
+  <p>{{message}}</p>
+</div>
+{% endif %}
+<form class="ui form" action="{{ url_for('new_beer') }}" method="post" enctype="multipart/form-data">
+<h4 class="ui dividing header">Dados da cerveja</h4>
+<div class="three fields">
+  <div class="field">
+    <label for="name">Nome</label>
+    <input type="text" name="name" placeholder="Nome" required="true">
+  </div>
+  <div class="field">
+    <label for="description">Descrição</label>
+    <input type="text" name="description" placeholder="Descrição" required="true">
+  </div>
+  <div class="field">
+    <label for="description">Marca</label>
+    <input type="text" name="mark" placeholder="Ex: Brahma" required="true">
+  </div>
+</div>
+<div class="three fields">
+  <div class="field">
+    <label for="value">Valor</label>
+    <input type="number" name="value" min="0" required="true" placeholder="R$">
+  </div>
+  <div class="field">
+    <label for="type">Tipo</label>
+    <select class="ui fluid dropdown" name="type">
+      <option value="Pilsen">Pilsen</option>
+      <option value="Pale Ale">Pale Ale</option>
+      <option value="Lagger">Lagger</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="quantity">Quantidade (Garrafas Longneck)</label>
+    <input type="number" name="quantity" placeholder="Ex: 10" min="0" required="true">
+  </div>
+</div>
+<div class="field">
+  <label for="image">Imagem</label>
+  <input type="file" name="image" accept="image/*">
+</div>
+<button type="submit" name="button" class="ui primary button">Salvar</button>
+<a href="/beer" class="ui button">Cancelar</a>
+</form>
+
+
+
+<script type="text/javascript">
+  $('select.dropdown')
+  .dropdown()
+  ;
+  $('.message .close')
+  .on('click', function() {
+    $(this)
+      .closest('.message')
+      .transition('fade')
+    ;
+  })
+;
+</script>
+{% endblock body %}

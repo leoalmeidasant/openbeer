@@ -1,0 +1,44 @@
+{% extends "_user_base.html.j2" %}
+
+{% block body %}
+<div class="ui middle aligned center aligned grid">
+  <div class="seven wide column">
+    <form action="" method="post" class="ui large form">
+      <div class="ui stacked segment">
+        {{ form.csrf_token }}
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            {{ form.email(placeholder="Email") }}
+          </div>
+        </div>
+        {% if form.email.errors %}
+        <p class="ui error message">{{ form.errors.email }}</p>
+        {% endif %}
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            {{ form.password(placeholder="Senha") }}
+          </div>
+        </div>
+        {% if form.password.errors %}
+        <p class="ui error message">{{ form.errors.email }}</p>
+        {% endif %}
+        <div class="two fields">
+          <div class="field">
+            <a href="/new_user">Cadastrar</a>
+          </div>
+          <div class="field">
+            <div class="ui checkbox">
+              {{ form.remember_me }}
+              <label>Lembrar login</label>
+            </div>
+          </div>
+
+        </div>
+        <button type="submit" name="button" class="ui fluid large teal submit button">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock body %}

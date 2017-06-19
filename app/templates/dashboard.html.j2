@@ -1,0 +1,219 @@
+{% extends "_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+
+{% block body %}
+<div class="ui header">
+  Análises de Cervejas
+</div>
+
+<div class="ui grid">
+  <div class="two column">
+    <div class="ui segment column">
+      <div id="pie-chart" style="width:100%; height:400px;"></div>
+    </div>
+    <div class="ui segment column">
+      <div class="ui middle aligned center aligned grid">
+        <form class="ui form" hidden>
+          <div class="fields">
+            <div class="field">
+              <label for="started_at">Inicio</label>
+              <input type="date" name="started_at" id="started_at">
+            </div>
+            <div class="field">
+              <label for="ended_at">Fim</label>
+              <input type="date" name="ended_at" id="ended_at">
+            </div>
+          </div>
+          <button type="button" class="ui teal button center aligned" id="filterDate" name="button">Filtrar</button>
+        </form>
+        <div id="bar-chart" style="width:100%; height:400px;"></div>
+      </div>
+    </div>
+    <div class="ui segment column">
+      <div class="" id='line-chart' style="width:100%; height:400px;"></div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+
+  $.ajax({
+        url: "http://localhost:5000/sell_per_mark"
+    }).then( response => {
+      Highcharts.chart('pie-chart', {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: 'Cervejas mais vendidas (Por Marca)'
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+              }
+            }
+          }
+        },
+        series: [{
+          name: 'Brands',
+          colorByPoint: true,
+          data: response[0]
+        }]
+      });
+    });
+
+  $.ajax({
+    url: 'http://localhost:5000/sell_by_weekday'
+  }).then(response => {
+    Highcharts.chart('line-chart', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Histórico de vendas de cervejas por dias da semana'
+        },
+        subtitle: {
+            text: 'Fonte: openbeer.com'
+        },
+        xAxis: {
+            categories: response.categories
+        },
+        yAxis: {
+            title: {
+                text: 'Quantidade (Caixas)'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: response.series
+    });
+  });
+
+  $.ajax({
+    url: "http://localhost:5000/sell_by_gender",
+  }).then(response => {
+    Highcharts.chart('bar-chart', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Cervejas vendidas por sexo'
+      },
+      xAxis: {
+        categories: response.marks,
+        crosshair: true
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Quantidade (caixa)'
+        }
+      },
+      tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+      },
+      plotOptions: {
+        column: {
+          pointPadding: 0.2,
+          borderWidth: 0
+        }
+      },
+      series: [{
+        name: response.series.masculino.title,
+        data: response.series.masculino.data
+
+      }, {
+        name: response.series.feminino.title,
+        data: response.series.feminino.data
+      }]
+    });
+  });
+
+});
+
+$('#filterDate').on('click', () => {
+  let inicio = $('#started_at').val()
+  let fim = $('#ended_at').val()
+
+  // $.ajax({
+  //   url: "http://localhost:5000/sell_by_gender",
+  //   type: "get",
+  //   data: {
+  //     started_at: inicio,
+  //     ended_at: fim
+  //   }
+  // }).then(response => {
+  //   Highcharts.chart('bar-chart', {
+  //     chart: {
+  //       type: 'column'
+  //     },
+  //     title: {
+  //       text: 'Cervejas vendidas por sexo'
+  //     },
+  //     xAxis: {
+  //       categories: response.marks,
+  //       crosshair: true
+  //     },
+  //     yAxis: {
+  //       min: 0,
+  //       title: {
+  //         text: 'Quantidade (caixa)'
+  //       }
+  //     },
+  //     tooltip: {
+  //       headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+  //       pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+  //       '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
+  //       footerFormat: '</table>',
+  //       shared: true,
+  //       useHTML: true
+  //     },
+  //     plotOptions: {
+  //       column: {
+  //         pointPadding: 0.2,
+  //         borderWidth: 0
+  //       }
+  //     },
+  //     series: [{
+  //       name: response.series.masculino.title,
+  //       data: response.series.masculino.data
+  //
+  //     }, {
+  //       name: response.series.feminino.title,
+  //       data: response.series.feminino.data
+  //     }]
+  //   });
+  // });
+
+});
+
+</script>
+
+{% endblock body %}

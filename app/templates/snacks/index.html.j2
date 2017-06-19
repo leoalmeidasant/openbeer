@@ -1,0 +1,44 @@
+{% extends "_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+<a href="/snack/new" class="ui right floated blue button">Cadastrar novo petisco</a>
+<h4 class="ui header">Petiscos</h4>
+<div class="ui divider"></div>
+<div class="ui grid">
+  <table class="ui center aligned table">
+    <thead>
+      <th>Imagem</th>
+      <th>Nome</th>
+      <th>Tipo</th>
+      <th>Preço(Unitário)</th>
+      <th>Estoque</th>
+      <th></th>
+      <th></th>
+    </thead>
+    {% for snack in snacks %}
+    <tbody>
+      <tr>
+        <td>
+          {% if snack.image %}
+          <img src="static/images/{{ snack.image }}" style="width: 50px;">
+          {% endif %}
+        </td>
+        <td>{{ snack.name }}</td>
+        <td>{{ snack.type }}</td>
+        <td>{{ snack.value }}</td>
+        {% if snack.quantity <= 0 %}
+          <td class="ui error message">Sem estoque</td>
+        {% else %}
+          <td>{{ snack.quantity }}</td>
+        {% endif %}
+        <td><a href="{{url_for('edit_snack', id=snack.id)}}" class="ui button">Editar</a></td>
+        <td><a href="{{url_for('delete_snack', id=snack.id)}}" class="ui red button">Remover</a></td>
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+{% endblock body %}

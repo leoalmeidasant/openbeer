@@ -1,0 +1,195 @@
+{% extends "_user_base.html.j2" %}
+{% block base %}
+  {{ super() }}
+{% endblock base %}
+
+{% block body %}
+  {% if session['cart']['beers'] or session['cart']['snacks'] %}
+    <div class="ten wide column">
+      <h2 class="ui header">Itens</h2>
+      <table class="ui single line table">
+        <thead>
+          <tr>
+            <th>Imagem</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor unitário</th>
+            <th>Valor total</th>
+            <th>Opção</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for beer in session['cart']['beers'] %}
+          <tr>
+            <td><img src="../static/images/{{beer.image}}" alt="" class="ui middle aligned tiny circular image"></td>
+            <td>{{ beer.name }}</td>
+            <td>{{ beer.description }}</td>
+            <td>{{ beer.quantity }}</td>
+            <td>R${{ beer.value }}0</td>
+            <td>R${{ beer.total_value }}0</td>
+            <td>
+              <a href="/remove_beer_cart/{{ beer.id }}">
+                <i class="remove icon large red label"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+          {% for snack in session['cart']['snacks'] %}
+          <tr>
+            <td><img src="../static/images/{{snack.image}}" alt="" class="ui middle aligned tiny circular image"></td>
+            <td>{{ snack.name }}</td>
+            <td>Porção</td>
+            <td>{{ snack.quantity }}</td>
+            <td>R${{ snack.value }}0</td>
+            <td>R${{ snack.total_value }}0</td>
+            <td>
+              <a href="/remove_snack_cart/{{ snack.id }}">
+                <i class="remove icon large red label"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <form action="{{url_for('resume')}}" method="post" class="ui form">
+      <div class="ui ten wide column">
+        {% if addresses %}
+        <div class="column">
+            <div class="ui center aligned segment">
+                <h2 class="ui header">Endereço Padrão</h2>
+                  <label for=""><b>Rua:</b></label> {{addresses[index].street}} <br>
+                  <label for=""><b>Número:</b></label> {{addresses[index].number}} <br>
+                  <label for=""><b>Bairro:</b></label> {{addresses[index].district}} <br>
+                  <label for=""><b>Cidade:</b></label> {{addresses[index].city}} <br>
+                  <label for=""><b>CEP:</b></label> {{addresses[index].zip_code}} <br><br>
+                  <input type="text" name="street" value="{{addresses[index].street}}" hidden="true">
+                  <input type="text" name="number" value="{{addresses[index].number}}" hidden="true">
+                  <input type="text" name="district" value="{{addresses[index].district}}" hidden="true">
+                  <input type="text" name="city" value="{{addresses[index].city}}" hidden="true">
+                  <input type="text" name="zip_code" value="{{addresses[index].zip_code}}" hidden="true">
+              <a href="/select_address" name="button" class="ui teal button block">Selecionar endereço</a>
+            </div>
+          </div>
+      {% else %}
+        <div class="column">
+          <div class="ui center aligned segment">
+            <a href="/select_address" name="button" class="ui teal button block">Selecionar endereço</a>
+          </div>
+        </div>
+      {% endif %}
+      <br>
+      <div class="column">
+        <div class="ui center aligned segment">
+          <h3>Forma de pagamento</h3>
+            <input type="radio" name="payment_form" value="card" class="card"> Cartão
+            <input type="radio" name="payment_form" value="money" class="money"> Dinheiro
+            <div class="content-form disable">
+              <div class="fields">
+                <div class="field">
+                  <label>Card Type</label>
+                  <div class="ui selection dropdown">
+                    <input type="hidden" name="card[type]" required>
+                    <div class="default text">Type</div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                      <div class="item" data-value="visa">
+                        <i class="visa icon"></i>
+                        Visa
+                      </div>
+                      <div class="item" data-value="amex">
+                        <i class="amex icon"></i>
+                        American Express
+                      </div>
+                      <div class="item" data-value="discover">
+                        <i class="discover icon"></i>
+                        Discover
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="six wide field">
+                  <label for="">Nome do titular</label>
+                  <input type="text" name="name" value="" placeholder="Ex: ZÉ DA PADARIA" required>
+                </div>
+                <div class="four wide field">
+                  <label for="">Número</label>
+                  <input type="number" name="card_number" value="" min="0" step="1" placeholder="Ex: #### #### #### ####" required>
+                </div>
+                <div class="three wide field">
+                  <label for="">Data de expiração</label>
+                  <input type="text" name="expiration" value="" class="expiration" placeholder="Ex: MM/AA" required>
+                </div>
+                <div class="two wide field">
+                  <label for="">Cod.</label>
+                  <input type="text" name="code" value="" required placeholder="Ex: 123">
+                </div>
+                <div class="field">
+                  <label for="">Parcelas</label>
+                  <div class="ui selection dropdown">
+                    <input type="hidden" name="parts[type]" required>
+                    <div class="default text">Parcelas</div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                      <div class="item" data-value="1">
+                        1x - Sem juros
+                      </div>
+                      <div class="item" data-value="2">
+                        2x - Sem juros
+                      </div>
+                      <div class="item" data-value="3">
+                        3x - Sem juros
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <br>
+    </div>
+    {% if not addresses %}
+      <div class="ui alert message">
+        Selecione um endereço
+      </div>
+      <button type="submit" class="ui teal button block" disabled>Finalizar compra</button>
+    {% else %}
+      <button type="submit" class="ui teal button block">Finalizar compra</button>
+    {% endif %}
+    <a href="/" class="ui red button block">Voltar</a>
+  </form>
+  {% else %}
+    <h1 class="ui header">Não há itens no carrinho!</h1>
+  {% endif %}
+
+<style media="screen">
+  .disable {
+    display: none;
+  }
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+</style>
+
+<script type="text/javascript">
+  $('.card').on('click', function() {
+    $('.content-form').removeClass('disable');
+  });
+
+  $('.money').on('click', function() {
+    $('.content-form').addClass('disable');
+  });
+
+  $('.selection.dropdown')
+  .dropdown();
+
+</script>
+
+{% endblock body %}

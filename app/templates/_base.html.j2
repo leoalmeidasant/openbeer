@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../static/semantic/dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/menu.css">
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous">
+    </script>
+    <script src="../static/js/highcharts.js"></script>
+    <script src="../static/semantic/dist/semantic.min.js"></script>
+  </head>
+  <body>
+    {% block base %}
+    <div class="ui container raised blue segment">
+      <div class="ui huge header center aligned" id="titulo">
+        OPENBEER
+      </div>
+      <div class="ui secondary  menu">
+        <a class="active item" href="/">
+          Home
+        </a>
+        <a class="item" href="/beer">
+          Painel de Cervejas
+        </a>
+        <a class="item" href="/snack">
+          Painel de Petiscos
+        </a>
+        <a href="/dashboard" class="item">
+          Dashboard
+        </a>
+        <a href="/admin/orders" class="item">
+          Pedidos
+        </a>
+        <a href="/admin/returns" class="item">
+          Devoluções
+        </a>
+        <a href="/admin/exchanges" class="item">
+          Trocas
+        </a>
+        <div class="right menu">
+          <a class="ui item" href="/logout">
+            Sair, {{current_user.name}}
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endblock base %}
+
+    <div class="ui container raised blue segment">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="ui message info">
+          <i class="close icon"></i>
+          <div class="header flashes">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      {% endwith %}
+
+      {% block body %}
+      {% endblock body %}
+    </div>
+  </body>
+</html>
+
+<style media="screen">
+  #titulo {
+    font-size: 6em;
+  }
+</style>
