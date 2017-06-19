@@ -11,6 +11,9 @@ from app.models.item_exchange import ItemExchange
 from app.core.dao.item_exchange_dao import ItemExchangeDao
 from app.models.item import Item
 from app.core.dao.item_dao import ItemDao
+from app.models.item_order import ItemOrder
+from app.models.reversal import Reversal
+from app.models.order import Order
 
 class ExchangeController(object):
 
@@ -98,4 +101,75 @@ class ExchangeController(object):
 
                 item_exchange_dao.save(new_item_ex)
 
+            session['cart']['beers'] = []
+            session['cart']['snacks'] = []
+
             return 'Pedido de troca efetuado com sucesso!'
+
+
+    @staticmethod
+    def approve_trade(trade_id):
+        trade = Exchanges.query.filter(Exchanges.id == trade_id).first()
+        new_itens = ItemExchange.query.filter(
+            ItemExchange.exchange_id == trade_id,
+            ItemExchange.item_to_exchange == False
+        ).all()
+
+        # old_itens = ItemExchange.query.filter(
+        #     ItemExchange.exchange_id == trade_id,
+        #     ItemExchange.item_to_exchange == True
+        # )
+        #
+        # for i in old_itens:
+        #     item_order = ItemOrder.query.filter(ItemOrde.item_id == i.item_id).\
+        #         update(dict(
+        #             traded=True
+        #         ))
+        #     db.session.commit()
+
+        if trade.total_value < 0:
+            status = 'Aguardando pagamento'
+        elif trade.total_value == 0:
+            status = 'Pagamento não necessário'
+        else:
+            status = 'Valor ressarcido'
+
+        new_order = Order(
+            client_id=trade.client_id,
+            total_value=trade.total_value,
+            status=status,
+            order_date=datetime.today(),
+            created_at=datetime.today(),
+            updated_at=datetime.today()
+        )
+
+        db.session.add(new_order)
+        db.session.flush()
+
+        for i in new_itens:
+            item = ItemOrder(
+                item_id=i.item_id,
+                order_id=new_order.id,
+                returned=False,
+                confirm_return=False,
+                traded=True,
+                created_at=datetime.today(),
+                updated_at=datetime.today()
+            )
+
+            db.session.add(item)
+            db.session.commit()
+
+        if trade.total_value > 0:
+            reversal = Reversal(
+                client_id=trade.client_id,
+                value=trade.total_value
+            )
+            db.session.add(reversal)
+            db.session.commit()
+
+        updated_trade = Exchanges.query.filter(Exchanges.id == trade_id).\
+            update(dict(status='Troca aprovada'))
+        db.session.commit()
+
+        return 'Troca aprovada com sucesso!'
