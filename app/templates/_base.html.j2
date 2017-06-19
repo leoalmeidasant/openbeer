@@ -42,8 +42,8 @@
           Trocas
         </a>
         <div class="right menu">
-          <a class="ui item">
-            Logout
+          <a class="ui item" href="/logout">
+            Sair, {{current_user.name}}
           </a>
         </div>
       </div>
@@ -53,7 +53,7 @@
     <div class="ui container raised blue segment">
       {% with messages = get_flashed_messages() %}
       {% if messages %}
-        <div class="ui message">
+        <div class="ui message info">
           <i class="close icon"></i>
           <div class="header flashes">
             {% for message in messages %}

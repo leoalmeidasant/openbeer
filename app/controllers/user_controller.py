@@ -23,7 +23,11 @@ class UserController(object):
             created_at=datetime.datetime.now(),
             updated_at=datetime.datetime.now()
         )
-        SaveCommand.execute(user)
+        result_user = SaveCommand.execute(user)
+        if not user.id:
+            flash(result_user.result)
+            return redirect(url_for('new_user'))
+
         address = Address(
             zip_code=kwargs['address']['zip_code'],
             street=kwargs['address']['street'],
@@ -36,6 +40,7 @@ class UserController(object):
         )
         result = SaveCommand.execute(address)
         flash(result.result)
+
         return redirect(url_for('login'))
 
     @staticmethod

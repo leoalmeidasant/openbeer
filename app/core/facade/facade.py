@@ -10,7 +10,10 @@ from app.core.dao.exchanges_dao import ExchangesDao
 from app.core.dao.item_exchange_dao import ItemExchangeDao
 from app.core.result.result import Result
 from app.core.strategy.validate_name import ValidateName
+from app.core.strategy.validate_quantity import ValidateQuantity
+from app.core.strategy.validate_value import ValidateValue
 from app.core.strategy.get_class_name import GetClassName
+from app.core.strategy.validate_email import ValidateEmail
 
 
 class Facade(object):
@@ -29,6 +32,12 @@ class Facade(object):
         return_itens_dao = ReturnItensDao()
         exchange_dao = ExchangesDao()
         item_exchange_dao = ItemExchangeDao()
+
+        #create instances of validators
+        validate_quantity = ValidateQuantity()
+        validate_value = ValidateValue()
+        validate_email = ValidateEmail()
+
 
         # adding each dao in map indexing by class name
         self.__map_daos['User'] = user_dao
@@ -100,6 +109,12 @@ class Facade(object):
 
         # adding rules to array
         # rules_save_user.append(validate_name)
+        rules_save_beer.append(validate_quantity)
+        rules_save_snack.append(validate_quantity)
+        rules_save_beer.append(validate_value)
+        rules_save_snack.append(validate_value)
+
+        rules_save_user.append(validate_email)
 
         # map to agroup rules
         map_rules_user = {}

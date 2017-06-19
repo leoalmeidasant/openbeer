@@ -4,6 +4,15 @@
 {% endblock base %}
 
 {% block body %}
+{% if message %}
+<div class="ui message info">
+  <i class="close icon"></i>
+  <div class="header">
+    Mensagem
+  </div>
+  <p>{{message}}</p>
+</div>
+{% endif %}
 <form class="ui form" method="post" enctype="multipart/form-data" action="{{url_for('new_user')}}">
   <div class="field">
     <label>Name</label>

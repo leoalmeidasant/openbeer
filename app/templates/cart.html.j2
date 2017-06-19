@@ -91,7 +91,7 @@
                 <div class="field">
                   <label>Card Type</label>
                   <div class="ui selection dropdown">
-                    <input type="hidden" name="card[type]">
+                    <input type="hidden" name="card[type]" required>
                     <div class="default text">Type</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
@@ -112,24 +112,24 @@
                 </div>
                 <div class="six wide field">
                   <label for="">Nome do titular</label>
-                  <input type="text" name="name" value="" placeholder="Ex: ZÉ DA PADARIA">
+                  <input type="text" name="name" value="" placeholder="Ex: ZÉ DA PADARIA" required>
                 </div>
                 <div class="four wide field">
                   <label for="">Número</label>
-                  <input type="number" name="card_number" value="" min="0" step="1" placeholder="Ex: #### #### #### ####">
+                  <input type="number" name="card_number" value="" min="0" step="1" placeholder="Ex: #### #### #### ####" required>
                 </div>
                 <div class="three wide field">
                   <label for="">Data de expiração</label>
-                  <input type="text" name="expiration" value="" class="expiration" placeholder="Ex: MM/AA">
+                  <input type="text" name="expiration" value="" class="expiration" placeholder="Ex: MM/AA" required>
                 </div>
                 <div class="two wide field">
                   <label for="">Cod.</label>
-                  <input type="text" name="code" value="">
+                  <input type="text" name="code" value="" required placeholder="Ex: 123">
                 </div>
                 <div class="field">
                   <label for="">Parcelas</label>
                   <div class="ui selection dropdown">
-                    <input type="hidden" name="parts[type]">
+                    <input type="hidden" name="parts[type]" required>
                     <div class="default text">Parcelas</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
