@@ -18,7 +18,7 @@ itsdangerous==0.24
 Jinja2==2.9.5
 kombu==4.0.2
 MarkupSafe==0.23
-marshmallow==2.10.5
+marshmallow==2.15.1
 packaging==16.8
 psycopg2==2.6.2
 py==1.4.32
